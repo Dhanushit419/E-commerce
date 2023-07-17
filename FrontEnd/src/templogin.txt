@@ -1,0 +1,97 @@
+import React from "react";
+import { useState } from "react";
+import { useNavigate }from "react-router-dom";
+import axios from 'axios';
+import  profile from '../images/profile.png';
+import { Button } from "@mui/material";
+import TextField from '@mui/material/TextField';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PasswordIcon from '@mui/icons-material/Password';
+
+
+function login(){
+
+  // const [userDetails,setuserDetails]=useState({email:"",pwd:""});
+
+  // const navigate = useNavigate();
+
+  // function  UpdateInfo(e){
+  //   setuserDetails({...userDetails,[e.target.name]:e.target.value})
+  // }
+
+
+  // const Verify = () => {
+
+  //   axios({
+  //     url:"http://localhost/3000/login",
+  //     method:"POST",
+  //     params:userDetails,
+  //   }).then((res)=>{
+  //     if(res.correct ===true ){
+  //       navigate("/");
+  //     }
+  //     else if(res.wrnpwd ===true){
+  //       alert("Please Check Your Password")
+  //     }
+  //     else{
+  //       alert("Register Before Login ! ");
+  //       navigate("/register")
+  //     }
+  //   })
+
+
+
+  // }
+    return (
+        <div className="login">
+        <div>
+        <header className="header-home">
+          <a href="\" className="button">Home</a>
+          <a href='\about' className="button">About</a>
+          <a href="\register" className="button">Register</a>
+        </header>
+      </div>
+        <div className="main">
+        
+        <div className="submain">
+        <div>
+        <div className="imgs">
+          <div className="container-image">
+            <img alt=''  src={profile} height={100}></img>
+          </div>
+
+        </div>
+        <div>
+            <h1 style={{padding:" 20px"}}>Login Page</h1>
+        </div>
+        <br/>
+        <form>
+         <div style={{display:"flex",justifyContent:"space-around"}}>   
+         <AccountCircleIcon fontSize="large"/>
+                  <div className='input-box'><MailIcon /><input onChange={UpdateInfo} value={userDetails.email} name="email" className='input-cust' type="email" placeholder="Email Address" icon="MailIcon" /></div>
+
+            <TextField label="Email" onChange={UpdateInfo} value={userDetails.email}  name="email"   size="small" type="text"  variant="outlined" required/>
+        </div>
+        <br></br>
+        <br></br>
+        <div  style={{display:"flex",justifyContent:"space-around"}}>
+            <PasswordIcon fontSize="large"/>
+             <div className='input-box'><LockIcon /><input onChange={UpdateInfo} value={userDetails.pwd} name="pwd" className='input-cust' type="password" placeholder="Password" icon="Lock"/></div>
+
+            <TextField onChange={UpdateInfo} value={userDetails.pwd}  label="Password" name="pwd"  size="small" type="password"  variant="outlined" required/>
+        </div>
+        <br></br>
+         <Button variant="contained" className='submit-button' >Log in</Button> 
+         <br></br><br></br><br></br>
+
+         <div className='register'><p>No account? </p><a href='/register'>Register</a></div>
+        </form>
+
+    </div>
+         </div> 
+     </div>
+     </div>
+    );
+}
+
+export default login();
