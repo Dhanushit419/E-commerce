@@ -27,7 +27,7 @@ export default function Home(){
       <div className="search-bar-container">
           <input type="text" className="search-input" placeholder="  Unleash Your Shopping With TrenDify !..." />
        
-        <IconButton className="search-button" href='\product'><SearchIcon sx={{ color: "white"}}/></IconButton>
+        <IconButton className="search-button" href='\products'><SearchIcon sx={{ color: "white"}}/></IconButton>
           <IconButton className="search-button img" type='file'><ImageSearchIcon sx={{ color: "white"}}/></IconButton>
       </div>
     </div>

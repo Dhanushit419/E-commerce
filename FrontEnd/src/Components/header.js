@@ -1,19 +1,64 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
-import { IconButton } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import axios from "axios";
+import Product_card from "../Components/product_card";
+
+
+
+
+
+
 
 function Header(){
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      SearchedList();
+    }
+  };
+
+  const [searchCount,setSearchCount] =useState(0);
+  const [productsList,setProductsList]=useState([]);
+  const [searched,searchedstate]=useState(false);
+
+  const SearchedList =()=>{
+    searchedstate(true)
+    axios({
+      url:"http://localhost:3001/search",
+      method:"GET",
+      params: {searchTerm}
+    })
+    .then((res)=>{
+      console.log(res)
+      setSearchCount(res.data.count)
+      setProductsList(res.data.list)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+
+
+
     return(
-      <div>
+    <div>
+        <div>
         <header className="header-home" style={{display:"flex",justifyContent:'space-between'}}>
         <div className="header-search-bar-container">
         <div className="header-search-bar">
-          <input type="text" className="header-search-input" placeholder="  Search here.." />
+        <input type="text" id="search" value={searchTerm} onChange={handleInputChange} onKeyDown={handleKeyPress} className="header-search-input"  placeholder="  Search here.." autoFocus/>
         </div>
         <div className="header-search-bar">
-          <button className="header-search-button"><SearchIcon sx={{ color: "white"}}/></button>
+          <button className="header-search-button" onClick={SearchedList}><SearchIcon sx={{ color: "white"}}/></button>
           <button className="header-search-button img"><ImageSearchIcon sx={{ color: "white"}}/></button>
         </div>
       </div>
@@ -25,6 +70,29 @@ function Header(){
           </div>
           
         </header>
+      </div>
+
+      {searched?
+        <div>
+          <h3 style={{textAlign:"center"}}>{searchCount} Items found </h3>
+          <div className="product-card" >
+            
+          {
+              productsList.map( product =>
+                  <Product_card
+                  id={product.id}
+                  name={product.name} 
+                  price={product.price}
+                  discount={product.discount}
+                  image={product.imgurl}
+                  
+                  />
+              )
+          }    
+      </div>
+      <hr styles={"height:2px;border-width:0;color:gray;background-color:gray"} />
+      </div>
+      :<></>}
       </div>
     );
   }

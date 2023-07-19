@@ -6,8 +6,6 @@ import { Button } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
-import MailIcon from '@mui/icons-material/Mail';
-import LockIcon from '@mui/icons-material/Lock';
 import axios from 'axios';
 
 
@@ -21,27 +19,30 @@ function  UpdateInfo(e){
     setuserDetails({...userDetails,[e.target.id]:e.target.value})
 }
 
-  const Verify =()=>{
-    
-    axios({
-      url:"http://localhost:3001/login",
-      method:"POST",
-      params:userDetails
-    }).then((res)=>{
-      if(res.correct ===true ){
+const Verify = () => {
+  axios({
+    url: "http://localhost:3001/login",
+    method: "POST",
+    params: userDetails
+  })
+    .then((res) => {
+      <h1>res.data.username</h1>
+      if (res.data.correct) {
+        alert("Login SuccesFull  ! :)");
         navigate("/");
+      } else if(res.data.newMail){
+        alert("Register Before Login!");
+        navigate("/register");
       }
-      else if(res.wrnpwd ===true){
-        alert("Please Check Your Password")
-      }
-      else if(res.newMail===true){
-        alert("Register Before Login ! ");
-        navigate("/register")
+      else if (res.data.wrnpwd) {
+        alert("Please Check Your Password!");
       }
     })
+    .catch((err)=>{
+      console.log(err);
+     })
+}
 
-    
-  }
     return (
         <div className="login">
         <div>
@@ -65,7 +66,7 @@ function  UpdateInfo(e){
             <h1 style={{padding:" 20px"}}>Login Page</h1>
         </div>
         <br/>
-        <form >
+        
          <div style={{display:"flex",justifyContent:"space-around"}}>   
          <AccountCircleIcon fontSize="large"/>
          {/* <div className='input-box'><MailIcon /><input onChange={UpdateInfo} value={userDetails.email} name="email" className='input-cust' type="email" placeholder="Email Address" icon="MailIcon" /></div> */}
@@ -85,7 +86,7 @@ function  UpdateInfo(e){
          <br></br><br></br><br></br>
          
          <div className='register'><p>No account? </p><a href='/register'>Register</a></div>
-        </form>
+        
 
     </div>
          </div> 

@@ -114,7 +114,9 @@ body {
     cursor: pointer;
     margin-left: 15px;
   }
-
+.header-search-button:active{
+  transform: translateY(2px);
+}
   
   .background-container .img {
     max-width: 100%;
@@ -353,7 +355,7 @@ transition: transform 0.3s; */
   line-height: 1.5;
 }
 .card-data{
-  height: 320px;
+  height: auto;
   width: 200px;
   display: inline-flex;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
@@ -385,4 +387,18 @@ transition: transform 0.3s; */
   background-size: cover;
   background-repeat: no-repeat;
   height: 110vh;
+}
+
+/* sell product page */
+
+.sell{
+  background-image: url('../images/login_bg.jpg');
+  background-repeat: no-repeat;
+  background-size:cover;
+  height:auto}
+
+.text-field{
+  padding:20px;
+  display: flex;
+  justify-content: stretch;
 }
