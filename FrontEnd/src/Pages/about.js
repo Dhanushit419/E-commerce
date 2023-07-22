@@ -1,14 +1,18 @@
 import React from 'react';
 import './style-about.css';
 import Footer from '../Components/footer';
+import { Cookies } from 'react-cookie';
 
-export default function about(){
+
+export default function About(){
+    const myCookie=new Cookies();
+    const username=myCookie.get('username');
     return (
         <div className='about1'>
                  <header className='header-home'>
       <a href="\" className="button">Home</a>
           <a href='\about' className="button">About</a>
-          <a href="\login" className="button">Login</a>
+          {username?<a href="\profile" className="button">Profile</a>:<a href="/login" className="button">Login</a>}
       </header>
         <div className="about-section">
         <div className="inner-container">

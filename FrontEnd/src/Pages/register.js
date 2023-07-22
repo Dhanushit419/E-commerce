@@ -16,7 +16,7 @@ export default function Register(){
 
 
     const navigate =useNavigate();
-    const [userDetails,setuserDetails]=useState({name:"",email:"",mobile:"",pwd:""});
+    const [userDetails,setuserDetails]=useState({name:"",email:"",mobile:"",pwd:"",username:""});
   
   function  UpdateInfo(e){
       setuserDetails({...userDetails,[e.target.id]:e.target.value})
@@ -33,6 +33,9 @@ export default function Register(){
             alert("User Registered Successfully ! Please Login to continue :)")
             navigate("/login")
         }
+        else if(!res.data.uniqueUsername){
+            alert("Username Already Taken ! Try with Another username . Thank you! :) ")
+        }
         else{
             alert("Email Already Registered! Try with Different Email or Login to Continue :)")
 
@@ -41,6 +44,7 @@ export default function Register(){
     .catch((err)=>{
         console.log(err)
     })
+
   }
   
     return (
@@ -68,6 +72,11 @@ export default function Register(){
          <div style={{display:"flex",justifyContent:"space-around"}}  >   
             <img alt='' src={user} height={30} className='user'/>
             <TextField id="name" value={userDetails.name} onChange={UpdateInfo} label="Fullname" size="small" type="text"  variant="outlined" required/>
+        </div>
+        <br/>
+        <div style={{display:"flex",justifyContent:"space-around"}}  >   
+            <img alt='' src={user} height={30} className='user'/>
+            <TextField id="username" value={userDetails.username} onChange={UpdateInfo} label="Username" size="small" type="text"  variant="outlined" required/>
         </div>
         <br/>
         <div style={{display:"flex",justifyContent:"space-around"}}  >   

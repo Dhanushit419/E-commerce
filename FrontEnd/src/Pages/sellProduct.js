@@ -1,19 +1,23 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import Header from "../Components/header";
+import Header from "../Components/header1";
 import TextField from '@mui/material/TextField';
 import { Button } from "@mui/material";
 
 
 export default function Sell(){
-    const[productDetails,setProductDetails]=useState({name:'',price:0,discount:0,description:'',highlight1:'',highlight2:'',highlight3:'',imgurl:'',seller:''});
+    const[productDetails,setProductDetails]=useState({name:'',price:0,discount:0,description:'',highlight1:'',highlight2:'',highlight3:'',imgurl:'',seller:'',keywords:''});
 
     function  UpdateInfo(e){
     setProductDetails({...productDetails,[e.target.id]:e.target.value})
     }
 
     const addProduct =() =>{
+        const list=JSON.parse(localStorage.getItem('productsList'));
+        list.push(productDetails)
+        localStorage.setItem('productsList',JSON.stringify(list))
+
         axios({
             url:"http://localhost:3001/addproduct",
             method:"POST",
@@ -35,7 +39,7 @@ export default function Sell(){
 
     return(
         <div className="sell">
-            <Header/>
+            <Header />
         <div className="main">
             <div className="submain">
                 <div >
@@ -67,6 +71,9 @@ export default function Sell(){
                 </div>
                 <div className="text-field">
                 <TextField id="imgurl" onChange={UpdateInfo} aria-valuetext={productDetails.imgurl} label='Image Url of the Product' type="text" fullWidth />
+                </div>
+                <div className="text-field">
+                <TextField id="keywords" onChange={UpdateInfo} aria-valuetext={productDetails.keywords} defaultValue="keywords... " label='Keywords' type="text" fullWidth />
                 </div>
 
                 <Button variant="contained" onClick={addProduct}>Add Product</Button>

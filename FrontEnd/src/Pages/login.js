@@ -1,4 +1,5 @@
-import React from "react";
+import React ,{useEffect }from "react";
+import {Cookies }from 'react-cookie';
 import  profile from '../images/profile.png';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -11,25 +12,46 @@ import axios from 'axios';
 
 
 export default function Login(){
-
+  //setting cookie for username
+  const myCookie = new Cookies();
   const navigate =useNavigate();
-  const [userDetails,setuserDetails]=useState({email:"",pwd:""});
+  const [userDetails,setuserDetails]=useState({username:"",pwd:""});
 
 function  UpdateInfo(e){
     setuserDetails({...userDetails,[e.target.id]:e.target.value})
 }
 
+const[cart,setCart]=useState([])
+
 const Verify = () => {
+  
   axios({
     url: "http://localhost:3001/login",
     method: "POST",
     params: userDetails
   })
     .then((res) => {
-      <h1>res.data.username</h1>
       if (res.data.correct) {
+      myCookie.set("username",res.data.username);
+      const username=myCookie.get("username");
+
+      axios({
+          url:"http://localhost:3001/cart",
+          method:"GET",
+          params:{username}
+      })
+      .then((res)=>{
+          setCart(res.data.list)
+      })
+      .catch((err)=>{
+          console.log(err);
+      })
+
+      console.log(cart)
         alert("Login SuccesFull  ! :)");
-        navigate("/");
+
+        
+
       } else if(res.data.newMail){
         alert("Register Before Login!");
         navigate("/register");
@@ -43,11 +65,44 @@ const Verify = () => {
      })
 }
 
+//saving to local storage when cart updates and navigate to home
+
+useEffect(() => {
+  if (cart.length > 0) {
+    const cartItems = cart.map((item) => ({ ...item, quantity: 1 }));
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    navigate("/home");
+
+  }
+}, [cart]);
+
+//to get the list of products from the database
+
+const [productsList,setProductsList]=useState([]);
+    
+useEffect(()=>{
+    axios({
+        url: "http://localhost:3001/getproductlist",
+        method: "GET"
+    })
+    .then((res)=>{
+        setProductsList(res.data.list)
+        console.log(productsList)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+},[])
+
+localStorage.setItem('productsList',JSON.stringify(productsList))
+
+
     return (
         <div className="login">
         <div>
         <header className="header-home">
-          <a href="\" className="button">Home</a>
+          <a href="\home" className="button">Home</a>
           <a href='\about' className="button">About</a>
           <a href="\register" className="button">Register</a>
         </header>
@@ -71,7 +126,7 @@ const Verify = () => {
          <AccountCircleIcon fontSize="large"/>
          {/* <div className='input-box'><MailIcon /><input onChange={UpdateInfo} value={userDetails.email} name="email" className='input-cust' type="email" placeholder="Email Address" icon="MailIcon" /></div> */}
 
-         <TextField id="email" onChange={UpdateInfo} aria-valuetext={userDetails.email} size="small" type="email" label="E-mail" variant="outlined" required/>
+         <TextField id="username" onChange={UpdateInfo} aria-valuetext={userDetails.username} size="small" type="text" label="Username" variant="outlined" required/>
         </div>
         <br></br>
         <br></br>

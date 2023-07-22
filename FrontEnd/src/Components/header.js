@@ -6,16 +6,16 @@ import { IconButton, TextField } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from "axios";
 import Product_card from "../Components/product_card";
-
-
-
-
-
+import { Cookies } from "react-cookie";
+// import { useHistory } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 
 function Header(){
-  const [searchTerm, setSearchTerm] = useState('');
-
+  const myCookie=new Cookies();
+  // const history = useHistory();
+  const [searchTerm, setSearchTerm] = useState('')
+ 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -24,7 +24,11 @@ function Header(){
       event.preventDefault();
       SearchedList();
     }
-  };
+  }
+
+  // const handleOnFocus=()=>{
+  //   history.push('/products');
+  // }
 
   const [searchCount,setSearchCount] =useState(0);
   const [productsList,setProductsList]=useState([]);
@@ -55,7 +59,10 @@ function Header(){
         <header className="header-home" style={{display:"flex",justifyContent:'space-between'}}>
         <div className="header-search-bar-container">
         <div className="header-search-bar">
-        <input type="text" id="search" value={searchTerm} onChange={handleInputChange} onKeyDown={handleKeyPress} className="header-search-input"  placeholder="  Search here.." autoFocus/>
+          {/* <Link to='/products'> */}
+          <input type="text" id="search" value={searchTerm} onChange={handleInputChange} onKeyDown={handleKeyPress}  className="header-search-input"  placeholder="  Search here.." autoFocus/>
+
+          {/* </Link> */}
         </div>
         <div className="header-search-bar">
           <button className="header-search-button" onClick={SearchedList}><SearchIcon sx={{ color: "white"}}/></button>
@@ -63,7 +70,7 @@ function Header(){
         </div>
       </div>
           <div className="header-buttons">
-          <a href="\" className="button">Home</a>
+          <a href="\home" className="button">Home</a>
           <a href='\about' className="button">About</a>
           <a href="\cart" className="button">Ca<ShoppingCartIcon fontSize="small"/>rt</a>
           
@@ -98,3 +105,8 @@ function Header(){
   }
 
   export default Header;
+
+
+
+  // <Button startIcon={<ArrowBackIosOutlinedIcon/>} onClick={()=>{navigate('/products')}} variant="outlined" sx={{color:'white',border:'none'}}>Go to Product Page</Button>
+  // import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
