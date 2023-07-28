@@ -47,7 +47,9 @@ app.post("/register",async(req,res)=>{
 
     try{ 
         const docs= await conn.query("SELECT * FROM customer where email=$1",[data.email])
-        if(docs.rowCount!=0){
+        const docs1= await conn.query("SELECT * FROM customer where username=$1",[data.username])
+
+        if(docs.rowCount!=0 && docs1.rowCount!=0 ){
             response.newUser=false
         }
     }
@@ -68,7 +70,7 @@ app.post("/register",async(req,res)=>{
     
     if(response.newUser &&response.uniqueUsername){
         try{
-        await conn.query("INSERT INTO customer(name,email,password,mobile_num,username) VALUES($1,$2,$3,$4,$5);",[data.name,data.email,data.pwd,data.mobile,data.username])
+        await conn.query("INSERT INTO customer(username,email,password,mobile_num,address) VALUES($1,$2,$3,$4,$5);",[data.username,data.email,data.pwd,data.mobile,data.address])
         }
         catch(err){
             console.log("Error in registration of new user : "+err)
@@ -161,7 +163,7 @@ app.get("/getproductlist",async(req,res)=>{
 
             })
         })
-        console.log("List of products fetched and loaded to localstorage");
+        console.log(result.length+" products fetched and loaded to localstorage");
     }
     catch(err){
         console.log("error in listing the products from the database: "+err.message);
@@ -345,5 +347,42 @@ app.post("/removefromfav",async(req,res)=>{
     res.json(response)
 })
 
+
+//adding review for a product
+
+app.post('/addreview',async(req,res)=>{
+    const data=req.query
+    //console.log(data)
+    try{
+        await conn.query("insert into reviews(id,username,review) values($1,$2,$3)",[data.id,data.username,data.review])
+        console.log("Review added to product : "+data.id+" by "+data.username)
+    }
+    catch(err){
+        console.log('Error in adding review '+err.message)
+    }
+})
+
+//fetching all reviews from the db
+
+app.get("/getreviews",async(req,res)=>{
+    var result=[];
+    try{
+        const docs =await conn.query("select * from reviews")
+      //  console.log(docs)
+        docs.rows.forEach( row=>{
+            result.push({
+                id:row.id,
+                username:row.username,
+                review:row.review
+            })
+        })
+        console.log(result.length+" Reviews fetched and loaded to localstorage");
+    }
+    catch(err){
+        console.log("error in getting reviews from the database: "+err.message);
+    }
+   // console.log("result : "+ result[0])
+    res.json({list:result})
+})
 
 app.listen(3001,()=>console.log("App is running"));

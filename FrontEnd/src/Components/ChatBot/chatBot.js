@@ -1,6 +1,6 @@
 import React from 'react';
 import ChatBot from 'react-simple-chatbot';
-
+import {Segment} from 'semantic-ui-react';
 
 export default function App(){
   const steps =[
@@ -72,9 +72,9 @@ export default function App(){
   return(
       <div className='main'>
         <div>
-
+         <Segment floated="right">
           <ChatBot steps={steps}/>
-
+         </Segment>
          </div>
       </div>
   )

@@ -9,14 +9,14 @@ import email from '../images/email.png';
 import { Button } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import axios from "axios";
-
-
+import Swal from 'sweetalert2'
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 
 export default function Register(){
 
 
     const navigate =useNavigate();
-    const [userDetails,setuserDetails]=useState({name:"",email:"",mobile:"",pwd:"",username:""});
+    const [userDetails,setuserDetails]=useState({email:"",mobile:"",pwd:"",username:"",address:""});
   
   function  UpdateInfo(e){
       setuserDetails({...userDetails,[e.target.id]:e.target.value})
@@ -29,17 +29,42 @@ export default function Register(){
         params:userDetails
     })
     .then((res)=>{
-        if(res.data.newUser){
-            alert("User Registered Successfully ! Please Login to continue :)")
-            navigate("/login")
+        if(!res.data.newUser){
+            Swal.fire({
+                icon:'warning',
+                title:'User Already Registered !',
+                showDenyButton: true,
+                confirmButtonText:'Login',
+                denyButtonText:'Try again',
+                confirmButtonColor:'#1565c0',
+                denyButtonColor:'#1565c0'
+              })
+              .then((result)=>{
+                if(result.isConfirmed){
+                  navigate("/login");
+                }
+              })
         }
         else if(!res.data.uniqueUsername){
-            alert("Username Already Taken ! Try with Another username . Thank you! :) ")
-        }
-        else{
-            alert("Email Already Registered! Try with Different Email or Login to Continue :)")
 
+            Swal.fire({
+                icon:'warning',
+                title:'Username Not Available !',
+                text:'Username already taken ! Please Try with different username '
+              })
         }
+        else if(res.data.newUser){
+            Swal.fire({
+                icon:'success',
+                title:'Registered Successfully ! ',
+                text:'Press Enter to login '
+              }).then((res)=>{
+                if(res.isConfirmed){
+                    navigate("/login")
+                }
+              })
+        }
+
     })
     .catch((err)=>{
         console.log(err)
@@ -69,11 +94,6 @@ export default function Register(){
         </div>
         <br/>
 
-         <div style={{display:"flex",justifyContent:"space-around"}}  >   
-            <img alt='' src={user} height={30} className='user'/>
-            <TextField id="name" value={userDetails.name} onChange={UpdateInfo} label="Fullname" size="small" type="text"  variant="outlined" required/>
-        </div>
-        <br/>
         <div style={{display:"flex",justifyContent:"space-around"}}  >   
             <img alt='' src={user} height={30} className='user'/>
             <TextField id="username" value={userDetails.username} onChange={UpdateInfo} label="Username" size="small" type="text"  variant="outlined" required/>
@@ -93,12 +113,17 @@ export default function Register(){
             <img alt=''  src={pass} height={30} />
             <TextField id="pwd" value={userDetails.pwd} onChange={UpdateInfo} size="small" type="password" label="Password" variant="outlined" required/>
         </div>
-        <br></br>
+        <br/>
         <div  style={{display:"flex",justifyContent:"space-around"}}>
             <img alt='' src={pass} height={30} />
             <TextField id="confirm-pwd" label="Confirm Password" size="small" type="password"  variant="outlined"required />
         </div>
         <br />
+        <div  style={{display:"flex",justifyContent:"space-around"}}>
+            <LocationCityIcon fontSize="large"/>
+            <TextField id="address" value={userDetails.address} onChange={UpdateInfo} label="Address" size="small" type="text"  variant="outlined" required />
+        </div>
+        <br/>
         <Button onClick={RegisterUser} variant="contained" className='submit-button' type="submit">Register</Button>         <br></br>
          <br />
          <br/>

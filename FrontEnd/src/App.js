@@ -12,8 +12,8 @@ import Profile  from './Pages/profile';
 import Orders from './Pages/orders';
 import OrderSuccess from './Pages/orderSuccess';
 import A from './test/1'
-
-
+import Payment from './Pages/payment'
+import Img from './Pages/img'
 
 export default function myapp(){
   return (
@@ -35,6 +35,9 @@ export default function myapp(){
       <Route element={<Orders />}  path='/orders'/> 
       <Route element={<OrderSuccess />}  path='/orderSuccess'/>
       <Route element={<A/>}  path='/a'/>
+      <Route element={<Payment/>}  path='/payment'/>
+      <Route element={<Img/>}  path='/i'/>
+
 
 
 

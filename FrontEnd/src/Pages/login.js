@@ -8,8 +8,8 @@ import TextField from '@mui/material/TextField';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
 import axios from 'axios';
-
-
+import LoginIcon from '@mui/icons-material/Login';
+import Swal from 'sweetalert2'
 
 export default function Login(){
   //setting cookie for username
@@ -22,6 +22,15 @@ function  UpdateInfo(e){
 }
 
 const[cart,setCart]=useState([])
+const [fetch,setFetch]=useState(false);
+
+const handleKeyPress = (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    Verify();
+  }
+}
+
 
 const Verify = () => {
   
@@ -42,22 +51,50 @@ const Verify = () => {
       })
       .then((res)=>{
           setCart(res.data.list)
+          setFetch(true)
+
       })
       .catch((err)=>{
           console.log(err);
       })
 
       console.log(cart)
-        alert("Login SuccesFull  ! :)");
 
-        
+      Swal.fire({
+        icon:'success',
+        title:'Login sucesful'
+      }).then((res)=>{
+        if(res.isConfirmed){
+          navigate("/home");
+        }
+      })
 
       } else if(res.data.newMail){
-        alert("Register Before Login!");
-        navigate("/register");
+
+        Swal.fire({
+          icon:'warning',
+          title:'User Not Registered !',
+          showDenyButton: true,
+          confirmButtonText:'Try Again',
+          denyButtonText:'Register',
+          confirmButtonColor:'#1565c0',
+          denyButtonColor:'#1565c0'
+        })
+        .then((result)=>{
+          if(result.isDenied){
+            navigate("/register");
+          }
+        })
+       
       }
       else if (res.data.wrnpwd) {
-        alert("Please Check Your Password!");
+
+      Swal.fire({
+        icon:'warning',
+        title:'Wrong Password !',
+        confirmButtonText:'Try Again !'
+
+      })
       }
     })
     .catch((err)=>{
@@ -68,10 +105,9 @@ const Verify = () => {
 //saving to local storage when cart updates and navigate to home
 
 useEffect(() => {
-  if (cart.length > 0) {
+  if (fetch) {
     const cartItems = cart.map((item) => ({ ...item, quantity: 1 }));
     localStorage.setItem('cart', JSON.stringify(cartItems));
-    navigate("/home");
 
   }
 }, [cart]);
@@ -79,8 +115,11 @@ useEffect(() => {
 //to get the list of products from the database
 
 const [productsList,setProductsList]=useState([]);
+const [reviews,setReviews]=useState([]);
+
     
 useEffect(()=>{
+  //to get the list of products
     axios({
         url: "http://localhost:3001/getproductlist",
         method: "GET"
@@ -93,9 +132,25 @@ useEffect(()=>{
         console.log(err)
     })
 
+      
+    //to get the review list
+
+    axios({
+      url:'http://localhost:3001/getreviews',
+      method:'GET'
+    })
+    .then((res)=>{
+      setReviews(res.data.list)
+    })
+    .catch((err)=>{
+      console.log(err)
+  })
+
 },[])
 
 localStorage.setItem('productsList',JSON.stringify(productsList))
+localStorage.setItem('reviews',JSON.stringify(reviews))
+
 
 
     return (
@@ -134,10 +189,10 @@ localStorage.setItem('productsList',JSON.stringify(productsList))
             <PasswordIcon fontSize="large"/>
             {/* <div className='input-box'><LockIcon /><input onChange={UpdateInfo} value={userDetails.pwd} name="pwd" className='input-cust' type="password" placeholder="Password" icon="Lock"/></div> */}
 
-            <TextField id="pwd" onChange={UpdateInfo} aria-valuetext={userDetails.pwd} size="small" type="password" label="Password" variant="outlined" required/>
+            <TextField id="pwd" onChange={UpdateInfo} aria-valuetext={userDetails.pwd} onKeyDown={handleKeyPress} size="small" type="password" label="Password" variant="outlined" required/>
         </div>
         <br></br>
-         <Button variant="contained" className='submit-button' type="submit" onClick={Verify}>Log in</Button> 
+         <Button variant="contained" className='submit-button' type="submit" onClick={Verify}><span>Login</span> <LoginIcon fontSize="very-small"/></Button> 
          <br></br><br></br><br></br>
          
          <div className='register'><p>No account? </p><a href='/register'>Register</a></div>

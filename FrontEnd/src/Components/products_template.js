@@ -12,7 +12,6 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import ShoppingCartCheckoutRoundedIcon from '@mui/icons-material/ShoppingCartCheckoutRounded';
 import CurrencyRupeeRoundedIcon from '@mui/icons-material/CurrencyRupeeRounded';
 import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
-import  Highlights from './highlightFeatures';
 import GradeRoundedIcon from '@mui/icons-material/GradeRounded';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import axios from "axios";
@@ -57,16 +56,22 @@ const userDetails={id:id,username:username}
         // })
     },[])
 
+//geting reviews of product
+const Reviews=JSON.parse(localStorage.getItem('reviews'))
+const CurrentItemReviews = Reviews.filter((item) => item.id == id);
 
+//adding to cart
 function handleChange(){
-        //addting to localstorage
+        //adding to localstorage
         const cart=JSON.parse(localStorage.getItem('cart'));
-        console.log("this is cart")
-        console.log(cart)
+       // console.log("this is cart")
+        //console.log(cart)
         cart.push(CurrentItem)
-        console.log("this is cart after add")
-        console.log(cart)
+       // console.log("this is cart after add")
+        //console.log(cart)
         localStorage.setItem('cart',JSON.stringify(cart))
+
+
 
 
         setAdd(true);
@@ -111,6 +116,42 @@ function handleChangeFav(){
         })
     }
 }
+
+
+const [review,setReview]=useState('');
+const HandleReview =(e)=>{
+    const updatedReview = e.target.value;
+    setReview(updatedReview)
+}
+
+
+const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      Addreview();
+    }
+  }
+
+const Review={id:id,username:username,review:review}
+
+const Addreview =()=>{
+    CurrentItemReviews.push(Review)
+    localStorage.setItem('reviews',JSON.stringify(CurrentItemReviews))
+    window.location.reload();
+
+    axios({
+        url:'http://localhost:3001/addreview',
+        method:'POST',
+        params:Review
+    })
+    .then((res)=>{
+
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+}
+
 
     return(
         <div className="product-display">
@@ -190,12 +231,30 @@ function handleChangeFav(){
             <p style={{fontSize:'18px',fontWeight:"1rem",color:'#001717'}}>Seller Name : {props.seller}</p>
 
             <br/>
+            <p style={{fontSize:'18px',fontWeight:"1rem",color:'#001717'}}>Reviews:✨</p>
+            <p>({CurrentItemReviews.length} reviews)</p>
+            <br/>
+            {CurrentItemReviews.map((item)=>(
+                <div>
+                <p style={{display:"inline-flex" ,textDecoration:"underline",alignItems:'center'}}>📝  <em>by user : {item.username}</em></p>
+                <br/>
+                <p>{item.review}</p>
+                <br/>
+                </div>
+                
+            )
+            )}
+            <br/>
+
+
             <p style={{fontSize:'18px',fontWeight:"1rem",color:'#001717',display:'inline'}}>Write a Review : </p><RateReviewIcon fontSize="small" sx={{display:"inline"}} />
             <br/>
             <form>
-            <textarea style={{display:'inline-block',borderRadius:'5px',textAlign:'center',alignContent:'center'}} rows='6' cols='80' placeholder="Write Your Valuable Review here .... Your Review Makes us give You a Good experience... Thanking You..!" />
+            <textarea onChange={HandleReview} onKeyDown={handleKeyPress} style={{display:'inline-block',borderRadius:'5px',textAlign:'center',alignContent:'center'}} rows='6' cols='80' placeholder="Write Your Valuable Review here .... Your Review Makes us give You a Good experience... Thanking You..!" />
             <br/><br/>
-            <Button variant="outlined">Submit Review</Button>
+
+            <Button variant="outlined" onClick={Addreview}>Submit Review</Button>
+
             <br/><br/><br/>
             </form>
             {add?
