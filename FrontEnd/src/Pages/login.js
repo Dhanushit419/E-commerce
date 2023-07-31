@@ -10,6 +10,7 @@ import PasswordIcon from '@mui/icons-material/Password';
 import axios from 'axios';
 import LoginIcon from '@mui/icons-material/Login';
 import Swal from 'sweetalert2'
+import LockIcon from '@mui/icons-material/Lock';
 
 export default function Login(){
   //setting cookie for username
@@ -186,7 +187,7 @@ localStorage.setItem('reviews',JSON.stringify(reviews))
         <br></br>
         <br></br>
         <div  style={{display:"flex",justifyContent:"space-around"}}>
-            <PasswordIcon fontSize="large"/>
+            <LockIcon  fontSize="large"/>
             {/* <div className='input-box'><LockIcon /><input onChange={UpdateInfo} value={userDetails.pwd} name="pwd" className='input-cust' type="password" placeholder="Password" icon="Lock"/></div> */}
 
             <TextField id="pwd" onChange={UpdateInfo} aria-valuetext={userDetails.pwd} onKeyDown={handleKeyPress} size="small" type="password" label="Password" variant="outlined" required/>

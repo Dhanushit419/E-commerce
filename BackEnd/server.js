@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import pg from "pg";
 import http from "http";
 import cors from "cors";
+import { Console } from "console";
 
 const app = express();
 app.use(bodyParser.urlencoded({extended:true})); 
@@ -70,7 +71,7 @@ app.post("/register",async(req,res)=>{
     
     if(response.newUser &&response.uniqueUsername){
         try{
-        await conn.query("INSERT INTO customer(username,email,password,mobile_num,address) VALUES($1,$2,$3,$4,$5);",[data.username,data.email,data.pwd,data.mobile,data.address])
+        await conn.query("INSERT INTO customer(username,email,password,mobile_num,address,city) VALUES($1,$2,$3,$4,$5,$6);",[data.username,data.email,data.pwd,data.mobile,data.address,data.city])
         }
         catch(err){
             console.log("Error in registration of new user : "+err)
@@ -288,7 +289,7 @@ app.post("/deletefromcart",async(req,res)=>{
         console.log("Product Deleted from cart of user : "+data.username+" with id :" +data.id)
     }
     catch(err){
-        console.log("error in adding product to cart : " + err.message);
+        console.log("error in deleting product to cart : " + err.message);
     }
     res.json(response)
 })
@@ -347,6 +348,45 @@ app.post("/removefromfav",async(req,res)=>{
     res.json(response)
 })
 
+//get favs of user
+
+app.get("/getfavs",async(req,res)=>{
+    const data=req.query
+    var result=[]
+    try{
+        const docs=await conn.query("SELECT products.id,products.name,products.price,products.imgurl FROM products JOIN favs ON products.id = favs.id WHERE favs.username = $1",[data.username])
+        docs.rows.forEach((row)=>{
+            result.push({
+                id:row.id,
+                name:row.name,
+                price:row.price,
+                img:row.imgurl
+            })
+        })
+        console.log(result)
+    }
+    catch(err){
+        console.log(err.message)
+    }
+    res.json({list:result})
+})
+
+//checking in favs
+app.post("/checkfavs",async(req,res)=>{
+    const data=req.query
+    const response={fav:true}
+    try{
+        const fav=await conn.query("select *from favs where username=$1 and id=$2",[data.username,data.id])
+        if(fav.rowCount==0){
+            response.fav=false
+        }
+    }
+    catch(err){
+        console.log("error in checking product in favs : " + err.message);
+    }
+    res.json(response)
+})
+
 
 //adding review for a product
 
@@ -384,5 +424,89 @@ app.get("/getreviews",async(req,res)=>{
    // console.log("result : "+ result[0])
     res.json({list:result})
 })
+
+//to order items from the cart
+
+
+app.post("/orderitem",async(req,res)=>{
+    const data=req.query
+    // console.log(data.items[0].id)
+    //console.log(data.date)
+    const response={ordered:false}
+    try{
+        console.log(data)
+        data.items.forEach(async(item)=>{
+            console.log(item.price)
+            await conn.query("insert into orders(username,date,id,name,quantity,price) values($1,$2,$3,$4,$5,$6)",[data.username,data.date,item.id,item.name,item.quantity,item.price-""])
+        })
+        response.ordered=true
+        console.log("items ordered")
+        await conn.query("delete from cart where username=$1",[data.username])
+        console.log("items deleted from cart")
+    }
+    catch(err){
+        console.log("error in ordering  - "+err.message)
+    }
+    res.json(response)
+})
+
+//to get order history
+
+app.get("/getorderhistory",async(req,res)=>{
+    const data=req.query
+    var date=[]
+    var orders=[]
+    //const response={dates:[],items:[]}
+    try{
+        const dates=await conn.query("SELECT DISTINCT date FROM orders WHERE username=$1",[data.username])
+        console.log(dates.rowCount)
+        dates.rows.forEach((row)=>{
+            date.push({date:row.date})
+        })
+        const items=await conn.query("SELECT * FROM ORDERS WHERE username=$1",[data.username])
+        items.rows.forEach((row)=>{
+            orders.push({
+                id:row.id,
+                name:row.name,
+                quantity:row.quantity,
+                price:row.price,
+                date:row.date
+            })
+        })
+        console.log(dates)
+        //response.items=items
+
+    }
+    catch(err){
+        console.log("error in getting history "+err.message)
+    }
+   // console.log(response)
+    res.json({dates:date,items:orders})
+    //console.log(orders);
+})
+
+
+//profile page details of the user
+
+app.get("/profile",async(req,res)=>{
+    const data=req.query
+   // console.log(data)
+   const response={email:"",mobile:"",address:"",city:"",count:0}
+    try{
+        const docs=await conn.query("select * from customer where username=$1",[data.username])
+        response.email=docs.rows[0].email
+        response.mobile=docs.rows[0].mobile_num
+        response.address=docs.rows[0].address
+        response.city=docs.rows[0].city
+        //console.log(docs)
+        const docs1=await conn.query("select * from orders where username=$1",[data.username])
+        response.count=docs1.rowCount
+    }
+    catch(err){
+        console.log(err.message)
+    }
+    res.json(response)
+})
+
 
 app.listen(3001,()=>console.log("App is running"));

@@ -11,12 +11,13 @@ import TextField from '@mui/material/TextField';
 import axios from "axios";
 import Swal from 'sweetalert2'
 import LocationCityIcon from '@mui/icons-material/LocationCity';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function Register(){
 
 
     const navigate =useNavigate();
-    const [userDetails,setuserDetails]=useState({email:"",mobile:"",pwd:"",username:"",address:""});
+    const [userDetails,setuserDetails]=useState({email:"",mobile:"",pwd:"",username:"",address:"",city:""});
   
   function  UpdateInfo(e){
       setuserDetails({...userDetails,[e.target.id]:e.target.value})
@@ -75,7 +76,7 @@ export default function Register(){
     return (
         <div className="login">
     <header className='header-home'>
-      <a href="\" className="button">Home </a>
+      <a href="\home" className="button">Home </a>
           <a href='\about' className="button">About</a>
           <a href="\login" className="button">Login</a>
       </header>
@@ -117,6 +118,11 @@ export default function Register(){
         <div  style={{display:"flex",justifyContent:"space-around"}}>
             <img alt='' src={pass} height={30} />
             <TextField id="confirm-pwd" label="Confirm Password" size="small" type="password"  variant="outlined"required />
+        </div>
+        <br />
+        <div  style={{display:"flex",justifyContent:"space-around"}}>
+            <LocationOnIcon fontSize="large" />
+            <TextField id="city" value={userDetails.city} onChange={UpdateInfo} label="City" size="small" type="text"  variant="outlined"required />
         </div>
         <br />
         <div  style={{display:"flex",justifyContent:"space-around"}}>

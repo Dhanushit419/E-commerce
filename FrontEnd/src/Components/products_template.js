@@ -54,6 +54,16 @@ const userDetails={id:id,username:username}
         //         setFav(true)
         //     }
         // })
+        axios({
+            url:"http://localhost:3001/checkfavs",
+            method:"POST",
+            params:userDetails
+        })
+        .then((res)=>{
+            if(res.data.fav){
+                setFav(true)
+            }
+        })
     },[])
 
 //geting reviews of product
@@ -70,10 +80,6 @@ function handleChange(){
        // console.log("this is cart after add")
         //console.log(cart)
         localStorage.setItem('cart',JSON.stringify(cart))
-
-
-
-
         setAdd(true);
         axios({
             url:"http://localhost:3001/addtocart",

@@ -5,6 +5,7 @@ import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import{ Link} from "react-router-dom";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Header1(){
     const navigate=useNavigate()
@@ -25,8 +26,8 @@ export default function Header1(){
                 </div>
               </div>
                   <div className="header-buttons">
-                  <a href="\home" className="button">Home</a>
-                  <a href='\about' className="button">About</a>
+                  <a href="\products" className="button">Products</a>
+                  <a href="\cart" className="button">Cart<ShoppingCartIcon fontSize="small"/></a>
                   <a href="\profile" className="button">Profile</a>
                   
                   </div>

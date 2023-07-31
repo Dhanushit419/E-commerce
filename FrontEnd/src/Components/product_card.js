@@ -42,6 +42,17 @@ export default function Card(props){
         //         setFav(true)
         //     }
         // })
+        axios({
+            url:"http://localhost:3001/checkfavs",
+            method:"POST",
+            params:userDetails
+        })
+        .then((res)=>{
+            if(res.data.fav){
+                setFav(true)
+            }
+        })
+        
     },[])
 
 
