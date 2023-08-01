@@ -538,10 +538,12 @@ app.get("/verifyadmin",async(req,res)=>{
     res.json(response)
 })
 
+
 app.get('/dashboard',async(req,res)=>{
     const data=req.query
     console.log(data)
-    const response={admin:false,products:0,users:0,revenue:[],stock:0,totalrevenue:0}
+    const response={admin:false,products:0,users:0,revenue:[],stock:0,completerevenue:0}
+    
     try{
         //admin verification
         const docs= await conn.query("select * from admin where id=$1",[data.adminname])
@@ -551,29 +553,67 @@ app.get('/dashboard',async(req,res)=>{
             const TotalProducts=await conn.query("select * from products")
             response.products=TotalProducts.rowCount
             console.log(TotalProducts.rowCount)
+
             const TotalUsers=await conn.query("select * from customer")
             response.users=TotalUsers.rowCount
             console.log(TotalUsers.rowCount)
+
             const stockCount=await conn.query("SELECT SUM(stock) AS total_stock from products")
             response.stock=stockCount.rows[0].total_stock
             console.log(response.stock)
+
             const completerevenue=await conn.query("SELECT SUM(price) AS revenue from orders")
-            response.totalrevenue=completerevenue.rows[0].price
-            console.log(response.totalrevenue)
-            const totalrevenue=await conn.query("SELECT date, SUM(price) AS revenue FROM orders GROUP BY date")
-            totalrevenue.rows.forEach((row)=>{
-                response.revenue.push({
-                    date:row.date,
-                    revenue:row.revenue
+            response.completerevenue=completerevenue.rows[0].revenue
+            console.log(response.completerevenue)
+            
+            try{
+                const totalrevenue=await conn.query("SELECT date, SUM(price) AS revenue FROM orders GROUP BY date")
+                totalrevenue.rows.forEach((row)=>{
+                    response.revenue.push({
+                        date:row.date,
+                        revenue:row.revenue
+                    })
                 })
-            })
-          //  console.log(response.revenue)
-        
+            }
+            catch(err){
+                console.log(err.message)
+            }
+          
         }
+        console.log(response)
     }
     catch(err){
         console.log(err.message)
     }
+   
     res.json(response)
 })
+
+
+//user list fetching
+
+
+app.get("/userlist",async(req,res)=>{
+    var result=[];
+    try{
+        const docs=await conn.query("select * from customer")
+
+        // console.log(docs)
+        docs.rows.forEach( row=> {
+            result.push({
+                username: row.username,
+                email:row.email,
+                mobile_num:row.mobile_num,
+                city:row.city,
+                address:row.address
+            })
+        })
+        console.log(result.length+" users fetched and loaded to local storage");
+    }
+    catch(err){
+       console.log("error in listing users: "+err.message);
+    }
+    res.json({list:result})
+})
+
 app.listen(3001,()=>console.log("App is running"));
