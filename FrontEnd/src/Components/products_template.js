@@ -214,8 +214,9 @@ const Addreview =()=>{
             <br/><br/>
             <div style={{display:"inline-flex",alignItems:'center'}}>
             <LocalOfferRoundedIcon/><span style={{color:'green'}}>{props.discount} % discount . Only @ TrenDify</span>
-            </div>
-            <br/><br/><br/>
+            </div><br/><br/>
+            <p style={{fontSize:'18px',fontWeight:"1rem",color:'#001717'}}>In Stock : {props.stock}</p>
+            <br/>
             <p style={{fontSize:'18px',fontWeight:"1rem",color:'#001717'}}>Descrption:</p>
             <br/>
             <p>

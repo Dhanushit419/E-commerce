@@ -15,12 +15,7 @@ import * as mobilenet from "@tensorflow-models/mobilenet";
 
 function Header(){
   const myCookie=new Cookies();
-  // const history = useHistory();
-  const [searchTerm, setSearchTerm] = useState('')
- 
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -42,7 +37,7 @@ function Header(){
     axios({
       url:"http://localhost:3001/search",
       method:"GET",
-      params: {searchTerm}
+      params: {searchTerm:document.querySelector('#search').value}
     })
     .then((res)=>{
       console.log(res)
@@ -57,38 +52,12 @@ function Header(){
   }
 
 
+
   // below is the code for mobilenet loading and detection of object 
+
   const [model, setModel] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
-  const [results, setResults] = useState([]);
 
-  const imageRef = useRef();
-
-  const uploadTrigger = () => {
-    imageRef.current.click();
-    console.log("image Upload button triggered")
-  };
-
-  const uploadImage = (e) => {
-    console.log("image uploaded ")
-    setResults([]);
-    const { files } = e.target;
-    if (files.length > 0) {
-      const url = URL.createObjectURL(files[0]);
-      setImageUrl(url);
-      console.log("image created as URL")
-      if(model &&imageUrl){
-        //to detect the object name and to save in results
-
-      }
-    } else {
-      setImageUrl(null);
-      console.log("Error in image creation as URL")
-    }
-    console.log(imageUrl)
-  }
-
-//loading model in the starting
+  //loading model in the starting
 
 const loadModel =async()=>{
   console.log("Loading Model......")
@@ -106,6 +75,51 @@ const loadModel =async()=>{
     loadModel()
   },[])
 
+  
+  const [imageUrl, setImageUrl] = useState(null);
+  const [results, setResults] = useState([]);
+
+  const imageRef = useRef();
+
+  const uploadTrigger = () => {
+    imageRef.current.click();
+    console.log("image Upload button triggered")
+  };
+
+  const loadImage = (src) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  };
+
+
+  const uploadImage = async(e) => {
+    console.log("image uploaded ")
+    setResults([]);
+    const { files } = e.target;
+    if (files.length > 0) {
+      const url = URL.createObjectURL(files[0]);
+      setImageUrl(url);
+      const img=await loadImage(url);
+      console.log("image created as URL")
+      if(model){
+        const results=await model.classify(img);
+        console.log(results)
+        document.querySelector('#search').value=results[0].className
+        document.querySelector('#searchButton').click()
+        
+      }
+    } else {
+      setImageUrl(null);
+      console.log("Error in image creation as URL")
+    }
+    // console.log(imageUrl)
+  }
+
+
 
 
     return(
@@ -115,12 +129,12 @@ const loadModel =async()=>{
         <div className="header-search-bar-container">
         <div className="header-search-bar">
           {/* <Link to='/products'> */}
-          <input type="text" id="search" value={searchTerm} onChange={handleInputChange} onKeyDown={handleKeyPress}  className="header-search-input"  placeholder="  Search here.." autoFocus/>
+          <input type="text" id="search"   onKeyDown={handleKeyPress}  className="header-search-input"  placeholder="  Search here.." autoFocus/>
 
           {/* </Link> */}
         </div>
         <div className="header-search-bar">
-          <button className="header-search-button" onClick={SearchedList}><SearchIcon sx={{ color: "white"}}/></button>
+          <button className="header-search-button" id="searchButton" onClick={SearchedList}><SearchIcon sx={{ color: "white"}}/></button>
           <input type="file" accept="image/*" onChange={uploadImage} ref={imageRef} style={{display:'none'}}/>
           <button className="header-search-button img" onClick={uploadTrigger}><ImageSearchIcon sx={{ color: "white"}}/></button>
         </div>

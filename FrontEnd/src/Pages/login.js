@@ -196,7 +196,8 @@ localStorage.setItem('reviews',JSON.stringify(reviews))
          <Button variant="contained" className='submit-button' type="submit" onClick={Verify}><span>Login</span> <LoginIcon fontSize="very-small"/></Button> 
          <br></br><br></br><br></br>
          
-         <div className='register'><p>No account? </p><a href='/register'>Register</a></div>
+         <div className='register'><p>No account? </p><a href='/register'> Register</a></div><br/><br/>
+         <div className='register'><p>Admin? </p><a href='/adminlogin'>Adminlogin</a></div>
         
 
     </div>

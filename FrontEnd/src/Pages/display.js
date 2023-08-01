@@ -7,9 +7,9 @@ export default function Display(){
     const {id} =useParams();
     console.log(id)
     const productsList=JSON.parse(localStorage.getItem('productsList'))
-    console.log(productsList)
+    //console.log(productsList)
     const DisplayItem = productsList.filter((item) => item.id == id)[0];
-    console.log(DisplayItem.name)
+    console.log(DisplayItem)
 
 
     // const [productDetails,setProductDetails] =useState({name:'',price:'',discount:'',rating:'',description:'',highlight1:'',highlight2:'',highlight3:'',imgurl:'',seller:''});
@@ -46,6 +46,7 @@ export default function Display(){
                 highlight2={DisplayItem.highlight2}
                 highlight3={DisplayItem.highlight3}
                 seller={DisplayItem.seller}
+                stock={DisplayItem.stock}
             />
         </div>
     );

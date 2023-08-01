@@ -1,13 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import Header from "../Components/header1";
+import Header from "../../Components/header1";
 import TextField from '@mui/material/TextField';
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
-export default function Sell(){
-    const[productDetails,setProductDetails]=useState({name:'',price:0,discount:0,description:'',highlight1:'',highlight2:'',highlight3:'',imgurl:'',seller:'',keywords:''});
+export default function AddProduct(){
+    const navigate=useNavigate()
+    const[productDetails,setProductDetails]=useState({name:'',price:0,discount:0,description:'',highlight1:'',highlight2:'',highlight3:'',imgurl:'',seller:'Trendify Products Limited...',keywords:'',stock:0});
 
     function  UpdateInfo(e){
     setProductDetails({...productDetails,[e.target.id]:e.target.value})
@@ -39,11 +41,14 @@ export default function Sell(){
 
     return(
         <div className="sell">
-            <Header />
+            <div style={{display:'flex',justifyContent:'flex-end',padding:'20px',columnGap:'30px'}}>
+            <Button variant="contained" onClick={()=>{navigate('/dashboard')}} >Dashboard</Button>
+            <Button variant="contained" >Logout</Button>
+            </div>
         <div className="main">
             <div className="submain">
                 <div >
-                <h1 >Sell Your Products In TrenDify! 🤝</h1>
+                <h1 >Add Product To Database 📅</h1>
                 <br/><br/>
                 <div className="text-field">
                 <TextField id="name"   onChange={UpdateInfo} aria-valuetext={productDetails.name} label='Name of the Product' type="text" fullWidth />
@@ -67,13 +72,13 @@ export default function Sell(){
                 <TextField id="highlight3" onChange={UpdateInfo} aria-valuetext={productDetails.highlight3} label='Highlight of the product - 3' type="text" fullWidth/>
                 </div>
                 <div className="text-field">
-                <TextField id="seller" onChange={UpdateInfo} aria-valuetext={productDetails.seller} label='Name of the Seller' type="text" fullWidth/>
-                </div>
-                <div className="text-field">
                 <TextField id="imgurl" onChange={UpdateInfo} aria-valuetext={productDetails.imgurl} label='Image Url of the Product' type="text" fullWidth />
                 </div>
                 <div className="text-field">
                 <TextField id="keywords" onChange={UpdateInfo} aria-valuetext={productDetails.keywords} defaultValue="keywords... " label='Keywords' type="text" fullWidth />
+                </div>
+                <div className="text-field">
+                <TextField id="stock" onChange={UpdateInfo} aria-valuetext={productDetails.stock}  label='Stock Count' type="number" fullWidth />
                 </div>
 
                 <Button variant="contained" onClick={addProduct}>Add Product</Button>

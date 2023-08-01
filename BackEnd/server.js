@@ -129,7 +129,7 @@ app.post("/addproduct",async(req,res)=>{
         const id=count.rowCount+1
         const rating =5
         console.log(id)
-        await conn.query("INSERT INTO products(id,name,price,discount,rating,description,highlight1,highlight2,highlight3,imgurl,seller,keywords) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12);",[id,data.name,data.price,data.discount,rating,data.description,data.highlight1,data.highlight2,data.highlight3,data.imgurl,data.seller,data.keywords])
+        await conn.query("INSERT INTO products(id,name,price,discount,rating,description,highlight1,highlight2,highlight3,imgurl,seller,keywords,stock) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13);",[id,data.name,data.price,data.discount,rating,data.description,data.highlight1,data.highlight2,data.highlight3,data.imgurl,data.seller,data.keywords,data.stock])
         response.added=true
         response.id=id
         response.name=data.name
@@ -160,7 +160,8 @@ app.get("/getproductlist",async(req,res)=>{
                 highlight1:row.highlight1,
                 highlight2:row.highlight2,
                 highlight3:row.highlight3,
-                seller:row.seller
+                seller:row.seller,
+                stock:row.stock
 
             })
         })
@@ -182,8 +183,19 @@ app.get("/search",async(req,res)=>{
     var result=[];
     try{
         if(data.searchTerm!=''){
-            const docs =await conn.query('select id,name,price,discount,imgurl from products where keywords like $1',[`%${data.searchTerm}%`]) 
-            console.log("SearchTerm : "+data.searchTerm+" Items Found : "+docs.rowCount)
+            const searchTermArray=data.searchTerm.split(/[, ]+/);
+            const searchTermIndexes = searchTermArray.map((term, index) => `$${index + 1}`).join(", ");
+            const queryParams = searchTermArray.map((term) => `%${term}%`);
+            //console.log(searchTermIndexes)
+            console.log(queryParams)
+
+
+            const query = `SELECT id, name, price, discount, imgurl FROM products
+            WHERE keywords ILIKE ANY(ARRAY[${searchTermIndexes}])`;
+          
+          const docs = await conn.query(query, queryParams);
+
+           console.log("SearchTerm : "+data.searchTerm+" Items Found : "+docs.rowCount)
             docs.rows.forEach( row=>{
                 result.push({
                     id:row.id,
@@ -508,5 +520,22 @@ app.get("/profile",async(req,res)=>{
     res.json(response)
 })
 
+
+//verifying admin
+
+app.get("/verifyadmin",async(req,res)=>{
+    const data=req.query
+    const response={admin:false}
+    try{
+        const docs=await conn.query("select * from admin where id=$1",[data.id])
+        if(docs.rows[0].password==data.pwd){
+            response.admin=true
+        }
+    }
+    catch(err){
+        console.log(err.message)
+    }
+    res.json(response)
+})
 
 app.listen(3001,()=>console.log("App is running"));
