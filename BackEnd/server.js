@@ -538,4 +538,42 @@ app.get("/verifyadmin",async(req,res)=>{
     res.json(response)
 })
 
+app.get('/dashboard',async(req,res)=>{
+    const data=req.query
+    console.log(data)
+    const response={admin:false,products:0,users:0,revenue:[],stock:0,totalrevenue:0}
+    try{
+        //admin verification
+        const docs= await conn.query("select * from admin where id=$1",[data.adminname])
+        //console.log(docs)
+        if(docs.rowCount!==0){
+            response.admin=true;
+            const TotalProducts=await conn.query("select * from products")
+            response.products=TotalProducts.rowCount
+            console.log(TotalProducts.rowCount)
+            const TotalUsers=await conn.query("select * from customer")
+            response.users=TotalUsers.rowCount
+            console.log(TotalUsers.rowCount)
+            const stockCount=await conn.query("SELECT SUM(stock) AS total_stock from products")
+            response.stock=stockCount.rows[0].total_stock
+            console.log(response.stock)
+            const completerevenue=await conn.query("SELECT SUM(price) AS revenue from orders")
+            response.totalrevenue=completerevenue.rows[0].price
+            console.log(response.totalrevenue)
+            const totalrevenue=await conn.query("SELECT date, SUM(price) AS revenue FROM orders GROUP BY date")
+            totalrevenue.rows.forEach((row)=>{
+                response.revenue.push({
+                    date:row.date,
+                    revenue:row.revenue
+                })
+            })
+          //  console.log(response.revenue)
+        
+        }
+    }
+    catch(err){
+        console.log(err.message)
+    }
+    res.json(response)
+})
 app.listen(3001,()=>console.log("App is running"));

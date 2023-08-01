@@ -4,9 +4,11 @@ import { Button } from "@mui/material";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 
 export default function AdminLogin(){
+    const myCookie=new Cookies()
     const navigate=useNavigate()
 
     const [userDetails,setuserDetails]=useState({id:"",pwd:""});
@@ -23,6 +25,7 @@ export default function AdminLogin(){
         })
         .then((res)=>{
             if(res.data.admin){
+                myCookie.set("admin",userDetails.id);
                 Swal.fire({
                     imageUrl:'https://i.ibb.co/8mG3ZG2/Whats-App-Image-2023-07-31-at-22-47-49.jpg',
                     imageHeight:'130px',
