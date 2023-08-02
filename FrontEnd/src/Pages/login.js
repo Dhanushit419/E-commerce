@@ -110,7 +110,6 @@ export default function Login() {
     if (fetch) {
       const cartItems = cart.map((item) => ({ ...item, quantity: 1 }));
       localStorage.setItem('cart', JSON.stringify(cartItems));
-
     }
   }, [cart]);
 
@@ -149,7 +148,7 @@ export default function Login() {
       })
 
   }, [])
-
+  console.log(productsList)
   localStorage.setItem('productsList', JSON.stringify(productsList))
   localStorage.setItem('reviews', JSON.stringify(reviews))
 

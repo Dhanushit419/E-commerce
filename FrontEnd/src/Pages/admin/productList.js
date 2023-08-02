@@ -2,41 +2,45 @@ import React, { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Button } from "@mui/material"
 import TextField from '@mui/material/TextField';
-const Tabledata = (props) => {
-    const [display1, setdisplay1] = useState(false);
-    const onchange = () => {
-        setdisplay1(true);
-    }
-    return (
-        <tr className="widthincrease">
-            <td>{props.index + 1}</td>
-            <td>{props.i.name}</td>
-            <td><img src={props.i.imgurl} height={70} /></td>
-            <td>{props.i.price}</td>
-            <td>{props.i.stock}</td>
-            <td >
+// const Tabledata = (props) => {
+//     const [display1, setdisplay1] = useState(false);
+//     const [stockValue, setStockValue] = useState(0);
+//     const onchange = () => {
+//         setdisplay1(true);
+//     }
+//     const onAddStock = () => {
+//         props.onStockChange(props.index, stockValue);
+//         setStockValue(0);
+//         setdisplay1(false);
+//       };
+//     return (
 
-                {
-                    display1?
-                        <div>
-                            <TextField size="small" type="number" sx={{width:'60px'}}></TextField>
-                            <Button >Add</Button></div>
-                        : <Button variant="outlined" onClick={onchange}>Add stock</Button>
-                }
-            </td>
-        </tr>
-    )
-}
+//     )
+// }
 
 export default function Dashboard() {
     const ProductList=JSON.parse(localStorage.getItem('productsList'))
     const [list,setList]=useState(ProductList)
+    const [display1, setdisplay1] = useState(false);
+    const [stockValue, setStockValue] = useState(0);
+    const onchange = () => {
+        setdisplay1(true);
+    }
+    const handleStockChange = (index, newStockValue) => {
+        const updatedList = [...list];
+        updatedList[index].stock += newStockValue; 
+        setList(updatedList);
+        localStorage.setItem('productsList', JSON.stringify(updatedList))
+
+      };
+
     const data = [
         { name: 'Hairband', sold: 4000, amt: 24000, imgsrc: "https://m.media-amazon.com/images/I/81IG62hC1oL._AC_UF1000,1000_QL80_.jpg" },
         { name: 'Laptop', sold: 3000, amt: 22100, imgsrc: "https://m.media-amazon.com/images/I/91oF9q-jE5L.jpg" },
         { name: 'Costumes', sold: 600, amt: 23000, imgsrc: "https://m.media-amazon.com/images/I/91oF9q-jE5L.jpg" },
         { name: 'Shoes', sold: 3000, amt: 21000, imgsrc: "https://m.media-amazon.com/images/I/91oF9q-jE5L.jpg" },
     ];
+
     return (
         <div className='plmain' style={{ backgroundColor: 'whitesmoke' }}>
             <div className='plmain2'>
@@ -78,8 +82,23 @@ export default function Dashboard() {
                         <div></div>
                         {list.map((i, index) => {
                             return (
-                                <Tabledata i={i} index={index} />
-                            )
+                                <tr className="widthincrease">
+                                <td>{index + 1}</td>
+                                <td>{i.name}</td>
+                                <td><img src={i.imgurl} height={70} /></td>
+                                <td>{i.price}</td>
+                                <td>{i.stock}</td>
+                                <td >
+                    
+                                    {
+                                        display1?
+                                            <div>
+                                                <TextField size="small" type="number" sx={{width:'60px'}} onChange={(e) => setStockValue(parseInt(e.target.value))} ></TextField>
+                                                <Button onClick={()=>{handleStockChange(index,stockValue)}} >Add</Button></div>
+                                            : <Button variant="outlined" onClick={onchange}>Add stock</Button>
+                                    }
+                                </td>
+                            </tr> )
                         })}
 
 
