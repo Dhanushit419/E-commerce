@@ -25,7 +25,7 @@ export default function Register(){
 
   const RegisterUser = () =>{
     axios({
-        url:"http://localhost:3001/register",
+        url:"http://localhost:3001/user/register",
         method:"POST",
         params:userDetails
     })

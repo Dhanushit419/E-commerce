@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import ShoppingCartCheckoutRoundedIcon from '@mui/icons-material/ShoppingCartCheckoutRounded';
@@ -14,23 +14,23 @@ import { Cookies } from "react-cookie";
 
 
 
-export default function Card(props){
-    const myCookie=new Cookies();
-    const username=myCookie.get("username");
+export default function Card(props) {
+    const myCookie = new Cookies();
+    const username = myCookie.get("username");
 
-    const [add,setAdd]=useState(false);
-    const [fav,setFav]=useState(false);
+    const [add, setAdd] = useState(false);
+    const [fav, setFav] = useState(false);
 
-    const userDetails={id:props.id,username}
-    useEffect(()=>{
+    const userDetails = { id: props.id, username }
+    useEffect(() => {
         //checking the local storage
-        const cart=JSON.parse(localStorage.getItem('cart'));
+        const cart = JSON.parse(localStorage.getItem('cart'));
         const incart = cart.find(item => item.id === props.id);
-        if(incart){
+        if (incart) {
             setAdd(true)
         }
         // axios({
-        //     url:"http://localhost:3001/checkcart",
+        //     url:"http://localhost:3001/cart/checkcart",
         //     method:"POST",
         //     params:userDetails
         // })
@@ -43,118 +43,118 @@ export default function Card(props){
         //     }
         // })
         axios({
-            url:"http://localhost:3001/checkfavs",
-            method:"POST",
-            params:userDetails
+            url: "http://localhost:3001/favs/checkfavs",
+            method: "POST",
+            params: userDetails
         })
-        .then((res)=>{
-            if(res.data.fav){
-                setFav(true)
-            }
-        })
-        
-    },[])
+            .then((res) => {
+                if (res.data.fav) {
+                    setFav(true)
+                }
+            })
+
+    }, [])
 
 
-    const CurrentItem={id:props.id,name:props.name,price:props.price,imgurl:props.image,quantity:1}
+    const CurrentItem = { id: props.id, name: props.name, price: props.price, imgurl: props.image, quantity: 1 }
     console.log(CurrentItem)
 
-    function handleChange(){
+    function handleChange() {
         //addting to localstorage
-        const cart=JSON.parse(localStorage.getItem('cart'));
+        const cart = JSON.parse(localStorage.getItem('cart'));
         console.log("this is cart")
         console.log(cart)
         cart.push(CurrentItem)
         console.log("this is cart after add")
         console.log(cart)
-        localStorage.setItem('cart',JSON.stringify(cart))
+        localStorage.setItem('cart', JSON.stringify(cart))
 
         setAdd(true);
         axios({
-            url:"http://localhost:3001/addtocart",
-            method:"POST",
-            params:userDetails
+            url: "http://localhost:3001/cart/addtocart",
+            method: "POST",
+            params: userDetails
         })
-        .then((res)=>{
-            if(res.data.added){
-                console.log("added to cart")
-            }
-        })
+            .then((res) => {
+                if (res.data.added) {
+                    console.log("added to cart")
+                }
+            })
     }
-    
-    function handleChangeFav(){
-        if(!fav){
+
+    function handleChangeFav() {
+        if (!fav) {
             setFav(true)
             axios({
-                url:"http://localhost:3001/addtofav",
-                method:"POST",
-                params:userDetails
+                url: "http://localhost:3001/favs/addtofav",
+                method: "POST",
+                params: userDetails
             })
-            .then((res)=>{
-                if(res.data.added){
-                    console.log("added to favourites")
-                }
-            })
+                .then((res) => {
+                    if (res.data.added) {
+                        console.log("added to favourites")
+                    }
+                })
         }
-        else{
+        else {
             setFav(false)
             axios({
-                url:"http://localhost:3001/removefromfav",
-                method:"POST",
-                params:userDetails
+                url: "http://localhost:3001/favs/removefromfav",
+                method: "POST",
+                params: userDetails
             })
-            .then((res)=>{
-                if(res.data.removed){
-                    console.log("removed from favourites")
-                }
-            })
+                .then((res) => {
+                    if (res.data.removed) {
+                        console.log("removed from favourites")
+                    }
+                })
         }
 
     }
 
-    return(
+    return (
         <div className="card-data">
-            <div style={{display:'block'}}>
-            <div style={{display:'inline-block'}}>
-            {/* <button  onClick={display} style={{border:"none"}}> */}
-            <Link to={`/view/productid/${props.id}`}>
-            <img src={props.image} alt="" />  
-            </Link>
-            {/* </button > */}
-            </div>
-            <h3 style={{marginLeft:'10px',width:"160px",overflow:"hidden"}}>{props.name}</h3>
-            <div style={{display:"inline-flex",alignItems:'center'}}>
-            <CurrencyRupeeRoundedIcon fontSize="small" sx={{display:'flex',justifyContent:'center',alignItems:'center',marginLeft:'10px'}}/>
-            <span style={{fontSize:'19px'}}>{props.price}</span>
-            </div>
-            <div style={{display:'flex',alignItems:'center'}}>
-            <LocalOfferRoundedIcon fontSize="very-small" sx={{display:"inline-block",marginLeft:'10px'}} /><span style={{color:'green',fontSize:'small',marginLeft:'10px'}}>{props.discount}% discount</span>
-            </div>
-            <div style={{display:"flex",justifyContent:"space-around"}}>
-                        
-                        {add?
-                            <IconButton className='buttonn' variant='contained'>
-                            <CheckCircleRoundedIcon sx={{color:'green'}}/>
-                            </IconButton>:
-                            <IconButton className='buttonn' variant='contained' onClick={handleChange}>
+            <div style={{ display: 'block' }}>
+                <div style={{ display: 'inline-block' }}>
+                    {/* <button  onClick={display} style={{border:"none"}}> */}
+                    <Link to={`/view/productid/${props.id}`}>
+                        <img src={props.image} alt="" />
+                    </Link>
+                    {/* </button > */}
+                </div>
+                <h3 style={{ marginLeft: '10px', width: "160px", overflow: "hidden" }}>{props.name}</h3>
+                <div style={{ display: "inline-flex", alignItems: 'center' }}>
+                    <CurrencyRupeeRoundedIcon fontSize="small" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '10px' }} />
+                    <span style={{ fontSize: '19px' }}>{props.price}</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <LocalOfferRoundedIcon fontSize="very-small" sx={{ display: "inline-block", marginLeft: '10px' }} /><span style={{ color: 'green', fontSize: 'small', marginLeft: '10px' }}>{props.discount}% discount</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-around" }}>
+
+                    {add ?
+                        <IconButton className='buttonn' variant='contained'>
+                            <CheckCircleRoundedIcon sx={{ color: 'green' }} />
+                        </IconButton> :
+                        <IconButton className='buttonn' variant='contained' onClick={handleChange}>
                             <AddShoppingCartIcon />
-                            </IconButton>
-                            }
+                        </IconButton>
+                    }
 
-                        {fav?
-                            <IconButton className='buttonn' sx={{color:"red"}} variant='contained'onClick={handleChangeFav}>
+                    {fav ?
+                        <IconButton className='buttonn' sx={{ color: "red" }} variant='contained' onClick={handleChangeFav}>
                             <FavoriteRoundedIcon />
-                            </IconButton>:
-                            <IconButton className='buttonn' variant='contained' onClick={handleChangeFav}>
+                        </IconButton> :
+                        <IconButton className='buttonn' variant='contained' onClick={handleChangeFav}>
                             <FavoriteBorderRoundedIcon />
-                            </IconButton>
-                            }
+                        </IconButton>
+                    }
 
-                        <Button href="\cart"><ShoppingCartCheckoutRoundedIcon sx={{color:'#6c6c6c'}} /></Button>
+                    <Button href="\cart"><ShoppingCartCheckoutRoundedIcon sx={{ color: '#6c6c6c' }} /></Button>
 
+                </div>
             </div>
-            </div>
-            </div>
-            
+        </div>
+
     );
 }

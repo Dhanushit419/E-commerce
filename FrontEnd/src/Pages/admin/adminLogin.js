@@ -19,7 +19,7 @@ export default function AdminLogin(){
 
     const Verify=()=>{
         axios({
-            url:'http://localhost:3001/verifyadmin',
+            url:'http://localhost:3001/admin/verifyadmin',
             method:'GET',
             params:userDetails
         })

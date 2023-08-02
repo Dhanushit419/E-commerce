@@ -22,6 +22,7 @@ import { css } from '@emotion/react';
 // import {PaymentElement} from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
 import StripeCheckout from 'react-stripe-checkout';
+import Loading from "../Components/loading";
 
 // const stripePromise = loadStripe('pk_test_51NZRPASBIKkbBLStupcXbanKIP1htZLKPh0NDRUyxeMcuEMw4S8dqf6p5f3FLNbLLz3pZoqCyYGTr9W3Dp2rSpVS008byxyHHp');
 // const options = {
@@ -32,8 +33,8 @@ export default function Cart(){
     const myCookie=new Cookies;
     const navigate=useNavigate();
     const username=myCookie.get("username");
+    const [loading,setLoading]=useState(false)
 
-   
     const cartItems=JSON.parse(localStorage.getItem('cart'));
     console.log(cartItems)
     const [cart,setCart]=useState(cartItems);
@@ -77,7 +78,7 @@ export default function Cart(){
         //to change in db
         const DeleteDetails={username:username,id:id}
         axios({
-            url:'http://localhost:3001/deletefromcart',
+            url:'http://localhost:3001/cart/deletefromcart',
             method:'POST',
             params:DeleteDetails
         })
@@ -95,9 +96,10 @@ export default function Cart(){
         setPayment(false)
     }
     const onToken=(token)=>{
+        setLoading(true)
         if(token){
             axios({
-                url:'http://localhost:3001/orderitem',
+                url:'http://localhost:3001/orders/orderitem',
                 method:'POST',
                 params:OrderDetails
             })
@@ -105,6 +107,7 @@ export default function Cart(){
                 if(res.data.ordered){
                     setCart([])
                     localStorage.setItem('cart',JSON.stringify([]))
+                    setLoading(false)
                     navigate('/ordersuccess')
     
                 }
@@ -128,17 +131,19 @@ export default function Cart(){
             denyButtonColor:'#1565c0'
         }).then((res)=>{
             if(res.isConfirmed){
+                setLoading(true)
                 axios({
-                    url:'http://localhost:3001/orderitem',
+                    url:'http://localhost:3001/orders/orderitem',
                     method:'POST',
                     params:OrderDetails
                 })
-                .then((res)=>{
+                .then(async(res)=>{
                     if(res.data.ordered){
                         setCart([])
                         localStorage.setItem('cart',JSON.stringify([]))
+                        setLoading(false)
                         navigate('/ordersuccess')
-        
+       
                     }
                 })
             }
@@ -151,8 +156,10 @@ export default function Cart(){
 
     return(
         <div className="cart">
-            <Header />
-            <div className="card-container" >
+            
+            {loading?<Loading text="Processing Your Order Request"/>
+            :<div>
+                <Header /><div className="card-container" >
             <div className='cartcard'>
             
             {count>0?<table style={{alignContent:"flex-start"}}>
@@ -265,6 +272,7 @@ export default function Cart(){
            { /* <Footer /> */}
            
         </div>
+            </div>}
         </div>
 
     )

@@ -29,7 +29,7 @@ export default function Profile(){
   useEffect(()=>{
     //console.log(username)
     axios({
-      url:'http://localhost:3001/profile',
+      url:'http://localhost:3001/user/profile',
       method:'GET',
       params:{username}
     })

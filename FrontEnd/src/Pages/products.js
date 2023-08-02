@@ -11,7 +11,7 @@ export default function(){
     
     // useEffect(()=>{
     //     axios({
-    //         url: "http://localhost:3001/getproductlist",
+    //         url: "http://localhost:3001/products/getproductlist",
     //         method: "GET"
     //     })
     //     .then((res)=>{

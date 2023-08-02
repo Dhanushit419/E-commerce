@@ -34,10 +34,4 @@ const Products=[{
 }
 ]
 
-export default Products
-
-
-// <a href="https://ibb.co/sCg0rR3"><img src="https://i.ibb.co/Lr0LfRp/costumes.jpg" alt="costumes" border="0"></a>
-// <a href="https://ibb.co/Nx2c9PR"><img src="https://i.ibb.co/XXxc7gH/laptop.jpg" alt="laptop" border="0"></a>
-// <a href="https://ibb.co/qkbGzM7"><img src="https://i.ibb.co/GcgwXvn/mobile.jpg" alt="mobile" border="0"></a>
-//<a href="https://ibb.co/QpLGqg4"><img src="https://i.ibb.co/8NqVRCH/pxfuel-1.jpg" alt="pxfuel-1" border="0"></a>
+export default Products;

@@ -9,13 +9,14 @@ import { Link } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import Favs from "../Components/favs_template";
+import Loading from "../Components/loading";
 
 export default function Favourites(){
     const navigate=useNavigate()
     const myCookie=new Cookies();
     const username=myCookie.get('username')
     const [favs,setfavs]=useState([]);
-
+    const [loading,setLoading]=useState(true)
     useEffect(()=>{
         axios({
             url:'http://localhost:3001/getfavs',
@@ -23,6 +24,7 @@ export default function Favourites(){
             params:{username}
         })
         .then((res)=>{
+            setLoading(false)
             setfavs(res.data.list)
             console.log(res.data.list)
         })
@@ -30,7 +32,9 @@ export default function Favourites(){
 
     return (
     <div className="favsmain">
-        <Header />
+        {loading? <Loading text="Getting Your Favorite Products..." />
+        :<div>
+            <Header />
         <div className="profile2" style={{display:'flex',justifyContent:'center',marginLeft:'200px',width:'600px',overflow:'scroll'}}>
             {favs && favs.length>0?<table>
                 <thead>
@@ -61,6 +65,7 @@ export default function Favourites(){
             <Button variant="contained"  startIcon={<AddShoppingCartIcon/>} onClick={()=>{navigate("/products")}}>Shop Now</Button>
             </div>}
 
-        </div>
+        </div>    
+        </div>}
     </div>)
 }

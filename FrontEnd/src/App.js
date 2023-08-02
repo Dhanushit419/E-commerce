@@ -14,7 +14,6 @@ import Favs from './Pages/favs'
 import A from './test/1'
 import B from './test/2'
 import Payment from './Pages/payment'
-import Img from './Pages/img'
 
 import AdminLogin from './Pages/admin/adminLogin';
 import Dashboard from './Pages/admin/dashboard';
@@ -56,7 +55,6 @@ export default function myapp(){
       <Route element={<B/>}  path='/b'/>
 
       <Route element={<Payment/>}  path='/payment'/>
-      <Route element={<Img/>}  path='/i'/>
 
 
 

@@ -16,7 +16,7 @@ export default function Display(){
 
     // useEffect(()=>{
     //     axios({
-    //         url: "http://localhost:3001/displayitem",
+    //         url: "http://localhost:3001/products/displayitem",
     //         method: "get",
     //         params: {id}
     //     })

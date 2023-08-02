@@ -1,13 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import Header from "../../Components/header1";
 import TextField from '@mui/material/TextField';
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import { Cookies } from "react-cookie";
 
 export default function AddProduct(){
+    const myCookie=new Cookies
     const navigate=useNavigate()
     const[productDetails,setProductDetails]=useState({name:'',price:0,discount:0,description:'',highlight1:'',highlight2:'',highlight3:'',imgurl:'',seller:'Trendify Products Limited...',keywords:'',stock:0});
 
@@ -21,7 +21,7 @@ export default function AddProduct(){
         localStorage.setItem('productsList',JSON.stringify(list))
 
         axios({
-            url:"http://localhost:3001/addproduct",
+            url:"http://localhost:3001/admin/addproduct",
             method:"POST",
             params:productDetails
         })
@@ -39,11 +39,16 @@ export default function AddProduct(){
         })
     }
 
+    const Logout =()=>{
+        myCookie.remove('admin')
+        navigate('/login')
+    }
+
     return(
         <div className="sell">
             <div style={{display:'flex',justifyContent:'flex-end',padding:'20px',columnGap:'30px'}}>
             <Button variant="contained" onClick={()=>{navigate('/dashboard')}} >Dashboard</Button>
-            <Button variant="contained" >Logout</Button>
+            <Button variant="contained" onClick={Logout} >Logout</Button>
             </div>
         <div className="main">
             <div className="submain">

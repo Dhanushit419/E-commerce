@@ -19,7 +19,7 @@ export default function Home(){
 
 //   useEffect(()=>{
 //           axios({
-//               url:"http://localhost:3001/cart",
+//               url:"http://localhost:3001/cart/cart",
 //               method:"GET",
 //               params:{username}
 //           })

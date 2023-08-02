@@ -7,7 +7,7 @@ export default function Dashboard(){
      const [userlist,setuserlist]=useState([{username:'nantha'}]);
     useEffect(()=>{
         axios({
-            url:'http://localhost:3001/userlist',
+            url:'http://localhost:3001/admin/userlist',
             method:'GET'
             
         })
