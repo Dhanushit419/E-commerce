@@ -1,10 +1,14 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 
 
 export default function OrderSuccess(){
+    useEffect(() => {
+        document.title = "OrderSuccess - Trendify"
+      }, [])
+
     const navigate=useNavigate();
     return(
         <div style={{display:'block',justifyContent:'center',alignItems:'center',height:'70vh'}}>

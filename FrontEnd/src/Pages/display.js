@@ -6,12 +6,14 @@ import Apiurl from '../Components/Apiurl.js'
 
 export default function Display(){
     const {id} =useParams();
-    console.log(id)
+    console.log("product Id : "+id)
     const productsList=JSON.parse(localStorage.getItem('productsList'))
     //console.log(productsList)
     const DisplayItem = productsList.filter((item) => item.id == id)[0];
     console.log(DisplayItem)
-
+    useEffect(() => {
+        document.title = DisplayItem.name+" - Trendify"
+      }, [])
 
     // const [productDetails,setProductDetails] =useState({name:'',price:'',discount:'',rating:'',description:'',highlight1:'',highlight2:'',highlight3:'',imgurl:'',seller:''});
 

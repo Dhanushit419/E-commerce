@@ -30,13 +30,17 @@ import Loading from "../Components/loading";
 //   };
 
 export default function Cart(){
+    useEffect(() => {
+        document.title = "About - Trendify"
+      }, [])
+
     const myCookie=new Cookies;
     const navigate=useNavigate();
     const username=myCookie.get("username");
     const [loading,setLoading]=useState(false)
 
     const cartItems=JSON.parse(localStorage.getItem('cart'));
-    console.log(cartItems)
+    console.log("Items in cart : "+cartItems.length)
     const [cart,setCart]=useState(cartItems);
     const count=cart.length;
 

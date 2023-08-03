@@ -27,6 +27,7 @@ function Header() {
   const [load, setLoad] = useState(false)
 
   const SearchedList = () => {
+    console.log("Search Request sent to Backend for : "+document.querySelector('#search').value)
     setLoad(true)
     axios({
       url: Apiurl+"/products/search",
@@ -34,7 +35,8 @@ function Header() {
       params: { searchTerm: document.querySelector('#search').value }
     })
       .then((res) => {
-        console.log(res)
+       // console.log(res)
+        console.log("Received "+res.data.count+" Results")
         setSearchCount(res.data.count)
         setProductsList(res.data.list)
         setLoad(false)

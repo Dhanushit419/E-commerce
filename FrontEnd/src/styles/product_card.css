@@ -1,0 +1,47 @@
+
+/* 
+product listing page card */
+
+/* display: inline-flex;
+height: 300px;
+width: 300px;
+border-radius: 10px;
+margin: 50px;
+box-shadow: 5px 5px 20px black;
+overflow: hidden;
+transition: transform 0.3s; */
+.product-card {
+    background-color: whitesmoke;
+    line-height: 1.5;
+  }
+  
+  .card-data {
+    height: auto;
+    width: 200px;
+    display: inline-flex;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    border-radius: 10px;
+    margin: 50px;
+    overflow: hidden;
+    transition: transform 0.3s;
+  
+  }
+  
+  .card-data:hover {
+    transform: scaleX(1.1);
+    /* box-shadow: rgb(0, 23, 23) 0px 5px 15px 0px; */
+  
+  }
+  
+  .card-data img {
+    width: 180px;
+    height: 180px;
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 10%;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+  
+  }
+  

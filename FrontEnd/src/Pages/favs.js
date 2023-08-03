@@ -13,6 +13,9 @@ import Favs from "../Components/favs_template";
 import Loading from "../Components/loading";
 
 export default function Favourites(){
+    useEffect(() => {
+        document.title = "Favourites - Trendify"
+      }, [])
     const navigate=useNavigate()
     const myCookie=new Cookies();
     const username=myCookie.get('username')
@@ -20,14 +23,14 @@ export default function Favourites(){
     const [loading,setLoading]=useState(true)
     useEffect(()=>{
         axios({
-            url:Apiurl+'/getfavs',
+            url:Apiurl+'/favs/getfavs',
             method:'GET',
             params:{username}
         })
         .then((res)=>{
             setLoading(false)
             setfavs(res.data.list)
-            console.log(res.data.list)
+            console.log("Products in Favs : "+res.data.list.length)
         })
     },[])
 

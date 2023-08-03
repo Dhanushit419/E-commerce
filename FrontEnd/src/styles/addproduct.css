@@ -1,0 +1,16 @@
+/* add product page */
+
+.sell {
+    background-image: url('../images/login_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto
+  }
+  
+  .text-field {
+    padding: 20px;
+    display: flex;
+    justify-content: stretch;
+  }
+  
+  

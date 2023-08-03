@@ -58,16 +58,15 @@ export default function Card(props) {
 
 
     const CurrentItem = { id: props.id, name: props.name, price: props.price, imgurl: props.image, quantity: 1 }
-    console.log(CurrentItem)
-
+    //console.log(CurrentItem)
     function handleChange() {
         //addting to localstorage
         const cart = JSON.parse(localStorage.getItem('cart'));
-        console.log("this is cart")
-        console.log(cart)
+        // console.log("this is cart")
+        // console.log(cart)
         cart.push(CurrentItem)
-        console.log("this is cart after add")
-        console.log(cart)
+        // console.log("this is cart after add")
+        // console.log(cart)
         localStorage.setItem('cart', JSON.stringify(cart))
 
         setAdd(true);

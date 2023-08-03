@@ -1,0 +1,51 @@
+
+/* order history page uh */
+
+.ordersmain {
+    padding-top: 100px;
+    background-color: whitesmoke;
+    color: black;
+    padding: 90px 0 90px 0;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    min-height: 80vh;
+    min-width: 100%;
+  }
+  
+  /* .submain{
+      width: 200px;  
+  } */
+  .h1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(0, 23, 23);
+    /* Change this to the desired background color */
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  
+  }
+  
+  .o {
+    padding-top: 10px;
+    width: 100vb;
+  }
+  
+  .final {
+    padding-left: 50px;
+  }
+  
+  .p {
+    padding-top: 100px;
+  }
+  
+  .sh {
+    background-image: url('https://static.vecteezy.com/system/resources/previews/006/262/477/original/white-abstract-background-backdrop-for-presentation-design-for-website-free-photo.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-sizing: border-box;
+  }
+  

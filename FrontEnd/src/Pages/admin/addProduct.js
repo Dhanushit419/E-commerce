@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import axios from "axios";
 import Apiurl from '../../Components/Apiurl'
 import TextField from '@mui/material/TextField';
@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
 import Swal from "sweetalert2";
 export default function AddProduct(){
+    useEffect(() => {
+        document.title = "AddProduct - Trendify"
+      }, [])
+
     const myCookie=new Cookies
     const navigate=useNavigate()
     const[productDetails,setProductDetails]=useState({name:'',price:0,discount:0,description:'',highlight1:'',highlight2:'',highlight3:'',imgurl:'',seller:'Trendify Products Limited...',keywords:'',stock:0});

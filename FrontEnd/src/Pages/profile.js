@@ -15,14 +15,17 @@ import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import{ Link} from "react-router-dom";
 
 export default function Profile(){
+  useEffect(() => {
+    document.title = "Profile - Trendify"
+  }, [])
+
   const myCookie=new Cookies();
   const username=myCookie.get('username');
   const navigate=useNavigate();
 
   const logOut=()=>{
     myCookie.remove('username')
-    localStorage.clear();
-    navigate("/")
+    navigate("/login")
   }
 
   const [userDetails,setUserDetails]=useState([])

@@ -109,7 +109,20 @@ router.get("/displayitem", async (req, res) => {
 
 })
 
-
+router.post("/addstock",async(req,res)=>{
+    console.log(req.query)
+    const data=req.query
+    try{
+        const docs=await conn.query("select stock from products where id=$1",[data.id])
+        const updatedStock=docs.rows[0].stock+parseInt(data.newStockValue)
+        console.log(updatedStock)
+        await conn.query("update products set stock=$1 where id=$2",[updatedStock,data.id])
+        console.log("Stock added for ID: "+data.id)
+    }
+    catch(err){
+        console.log(err.message)
+    }
+})
 
 
 export default router;

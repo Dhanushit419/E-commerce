@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import user from '../images/user.png';
 import pass from '../images/password.png';
@@ -15,7 +15,9 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function Register(){
-
+    useEffect(() => {
+        document.title = "Register - Trendify"
+      }, [])
 
     const navigate =useNavigate();
     const [userDetails,setuserDetails]=useState({email:"",mobile:"",pwd:"",username:"",address:"",city:""});

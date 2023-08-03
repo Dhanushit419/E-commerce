@@ -7,7 +7,7 @@ const router=express.Router()
 
 router.get("/cart", async (req, res) => {
     const data = req.query
-    var result = []
+    var result=[]
     try {
         const docs = await conn.query("SELECT products.id,products.name,products.price,products.imgurl FROM products JOIN cart ON products.id = cart.id WHERE cart.username = $1", [data.username])
         docs.rows.forEach(row => {
@@ -20,7 +20,7 @@ router.get("/cart", async (req, res) => {
         })
         console.log("Cart of user : " + data.username + "fetched and Loaded to localstorage ")
         //console.log(result)
-        res.json({ list: result, count: docs.rowCount })
+        res.json({ list: result, count: docs.rowCount,status:true })
         //console.log(result)
     }
     catch (err) {

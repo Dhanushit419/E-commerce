@@ -9,6 +9,10 @@ import Loading from "../../Components/loading";
 import Apiurl from '../../Components/Apiurl.js'
 
 export default function Dashboard(){
+    useEffect(() => {
+        document.title = "Admin Dashboard - Trendify"
+    }, [])
+
     const myCookie=new Cookies
     const adminname=myCookie.get('admin')
     if(adminname==''){

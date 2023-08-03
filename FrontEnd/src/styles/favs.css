@@ -1,0 +1,10 @@
+
+/* favouroites page */
+
+.favsmain {
+    /* background-color: whitesmoke; */
+    background-image: url("https://i.ibb.co/8c5YHq2/578dfcd4-f319-44b3-bf74-5c7e06ab7073.jpg");
+    min-height: 100vh;
+    /* background-repeat: no-repeat; */
+    background-size: contain;
+  }

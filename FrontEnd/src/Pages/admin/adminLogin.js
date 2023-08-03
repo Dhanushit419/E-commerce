@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import axios from 'axios';
@@ -8,6 +8,10 @@ import { Cookies } from "react-cookie";
 import Apiurl from '../../Components/Apiurl.js'
 
 export default function AdminLogin(){
+    useEffect(() => {
+        document.title = "AdminLogin - Trendify"
+      }, [])
+
     const myCookie=new Cookies()
     const navigate=useNavigate()
 

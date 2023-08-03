@@ -1,0 +1,63 @@
+/*start page*/
+.start{
+  height: 100vh;
+  background-image: url('../images/login_bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+/*for login form */
+.login {
+    background-image: url('../images/login_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    max-height: auto;
+  
+  }
+  
+  .main {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  
+    /*background-color: rgb(252,252,252);*/
+  }
+  
+  .submain {
+    display: flex;
+    justify-content: space-around;
+    height: auto;
+    width: auto;
+    padding: 70px;
+    box-shadow: 2px 2px 3px rgb(207, 207, 207);
+    padding-top: 30px;
+    border-radius: 60px;
+    background-color: whitesmoke;
+    opacity: 0.9;
+  
+  }
+  
+  .imgs {
+    padding-top: 20px;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .profile {
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+  }
+  
+  .register {
+    display: inline-flex;
+    column-gap: 5px;
+  }
+  
+  .submit-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px #999;
+  }
+  

@@ -1,0 +1,45 @@
+
+/* order sucess page animations */
+
+@keyframes checkmark {
+    0% {
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+    }
+  
+    100% {
+      stroke-dasharray: 50;
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  
+  .checkmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 5;
+    stroke: #4caf50;
+    fill: transparent;
+    animation: checkmark 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fade-in-text {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  

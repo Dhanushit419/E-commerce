@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Button } from "@mui/material"
 import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
+import axios from "axios";
+import Apiurl from '../../Components/Apiurl.js'
+
 // const Tabledata = (props) => {
 //     const [display1, setdisplay1] = useState(false);
 //     const [stockValue, setStockValue] = useState(0);
@@ -21,23 +24,36 @@ import { Cookies } from "react-cookie";
 // }
 
 export default function Dashboard() {
-    const navigate=useNavigate()
-    const myCookie=new Cookies
-    const ProductList=JSON.parse(localStorage.getItem('productsList'))
-    const [list,setList]=useState(ProductList)
+    useEffect(() => {
+        document.title = "Products List - Trendify"
+    }, [])
+
+    const navigate = useNavigate()
+    const myCookie = new Cookies
+    const ProductList = JSON.parse(localStorage.getItem('productsList'))
+    const [list, setList] = useState(ProductList)
     const [display1, setdisplay1] = useState(false);
     const [stockValue, setStockValue] = useState(0);
     const onchange = () => {
         setdisplay1(true);
     }
-    const handleStockChange = (index, newStockValue) => {
+
+    const handleStockChange = (index, newStockValue,id) => {
         const updatedList = [...list];
-        updatedList[index].stock += newStockValue; 
+        updatedList[index].stock += newStockValue;
         setList(updatedList);
         localStorage.setItem('productsList', JSON.stringify(updatedList))
+        setdisplay1(false);
+        axios({
+            url:Apiurl +'/products/addstock',
+            method:'POST',
+            params:{id,newStockValue}
+        })
+        .then((res)=>{
 
-      };
-      const Logout =()=>{
+        })
+    };
+    const Logout = () => {
         myCookie.remove('admin')
         navigate('/adminlogin')
     }
@@ -51,7 +67,7 @@ export default function Dashboard() {
     return (
         <div className='plmain' style={{ backgroundColor: 'whitesmoke' }}>
             <div className='plmain2'>
-                <Button variant="contained" onClick={()=>{navigate("/dashboard")}}>Dashboard</Button>
+                <Button variant="contained" onClick={() => { navigate("/dashboard") }}>Dashboard</Button>
                 <Button variant="contained" onClick={Logout}>Logout</Button>
             </div>
             <br></br>
@@ -63,7 +79,7 @@ export default function Dashboard() {
             </div>
             <br></br>
             <div className="plmain4">
-                <p >No of products: {list.length}</p>
+                <p >No of products: {list?.length}</p>
             </div>
             <br></br>
             <br></br>
@@ -77,9 +93,11 @@ export default function Dashboard() {
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                         </tr>
                         <tr className="columnname">
                             <td>S.no</td>
+                            <td>Product ID</td>
                             <td>Product Name</td>
                             <td>image</td>
                             <td>price</td>
@@ -90,22 +108,23 @@ export default function Dashboard() {
                         {list.map((i, index) => {
                             return (
                                 <tr className="widthincrease">
-                                <td>{index + 1}</td>
-                                <td>{i.name}</td>
-                                <td><img src={i.imgurl} height={70} /></td>
-                                <td>{i.price}</td>
-                                <td>{i.stock}</td>
-                                <td >
-                    
-                                    {
-                                        display1?
-                                            <div>
-                                                <TextField size="small" type="number" sx={{width:'60px'}} onChange={(e) => setStockValue(parseInt(e.target.value))} ></TextField>
-                                                <Button onClick={()=>{handleStockChange(index,stockValue)}} >Add</Button></div>
-                                            : <Button variant="outlined" onClick={onchange}>Add stock</Button>
-                                    }
-                                </td>
-                            </tr> )
+                                    <td>{index + 1}</td>
+                                    <td>{i.id}</td>
+                                    <td>{i.name}</td>
+                                    <td><img src={i.imgurl} height={70} /></td>
+                                    <td>{i.price}</td>
+                                    <td>{i.stock}</td>
+                                    <td >
+
+                                        {
+                                            display1 ?
+                                                <div>
+                                                    <TextField size="small" type="number" sx={{ width: '60px' }} onChange={(e) => setStockValue(parseInt(e.target.value))} ></TextField>
+                                                    <Button onClick={() => { handleStockChange(index, stockValue,i.id) }} >Add</Button></div>
+                                                : <Button variant="outlined" onClick={onchange}>Add stock</Button>
+                                        }
+                                    </td>
+                                </tr>)
                         })}
 
 

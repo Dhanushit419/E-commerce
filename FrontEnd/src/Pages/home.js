@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import IconButton from '@mui/material/IconButton';
-import './styles.css';
 import Footer from '../Components/footer';
 import Card from '../Components/home_card';
 import ChatIcon from "../Components/ChatBot/chaticon";
@@ -14,6 +13,9 @@ import Toplist from '../Components/topproducts';
 
 
 export default function Home(){
+  useEffect(() => {
+    document.title = "Home - Trendify"
+  }, [])
   const myCookie = new Cookies();
   const username=myCookie.get("username");
 //   const[cart,setCart]=useState([])

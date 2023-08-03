@@ -1,0 +1,38 @@
+
+
+/* 
+admin login page */
+
+.adminlogin {
+    background-image: url("https://i.ibb.co/yWpvJcS/gradient-network-connection-background-23-2148865392.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .adminlogin-card {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    height: 55vh;
+    background-color: whitesmoke;
+    opacity: 0.7;
+  }
+  
+  /* .admincard-left{
+  } */
+  .admincard-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 50vh;
+    padding: 10px;
+    margin-top: 30px;
+    column-gap: 5px;
+  }
+  

@@ -10,6 +10,9 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import Loading from '../Components/loading';
 
 function OrderHistory() {
+    useEffect(() => {
+        document.title = "Orders - Trendify"
+      }, [])
     const navigate = useNavigate()
     const myCookie = new Cookies()
     const [loading, setLoading] = useState(true)
@@ -24,9 +27,9 @@ function OrderHistory() {
         })
             .then((res) => {
                 setDates(res.data.dates)
-                console.log(res.data.dates)
+                console.log("Unique Dates : "+res.data.dates.length)
                 setItems(res.data.items)
-                console.log(res.data.items)
+                console.log("Total items : "+res.data.items.length)
                 setLoading(false)
             })
     }, [])

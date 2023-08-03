@@ -1,0 +1,29 @@
+
+/*loading */
+.loading-text {
+    animation: load 1.5s infinite;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  @keyframes load {
+    0% {
+      opacity: 0.1;
+    }
+  
+    25% {
+      opacity: 0.25;
+    }
+  
+    50% {
+      opacity: 0.5;
+    }
+  
+    75% {
+      opacity: 1;
+    }
+  
+    100% {
+      opacity: 0;
+    }
+  }
+  

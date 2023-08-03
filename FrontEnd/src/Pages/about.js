@@ -1,16 +1,20 @@
-import React from 'react';
-import './style-about.css';
+import React ,{useEffect}from 'react';
 import Footer from '../Components/footer';
 import { Cookies } from 'react-cookie';
 
 
+
 export default function About(){
+    useEffect(() => {
+        document.title = "About - Trendify"
+      }, [])
+
     const myCookie=new Cookies();
     const username=myCookie.get('username');
     return (
         <div className='about1'>
                  <header className='header-home'>
-      <a href="\" className="button">Home</a>
+      <a href="\home" className="button">Home</a>
           <a href='\about' className="button">About</a>
           {username?<a href="\profile" className="button">Profile</a>:<a href="/login" className="button">Login</a>}
       </header>

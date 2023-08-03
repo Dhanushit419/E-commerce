@@ -15,6 +15,10 @@ import LockIcon from '@mui/icons-material/Lock';
 import Loading from "../Components/loading";
 
 export default function Login() {
+  useEffect(() => {
+    document.title = "Login - Trendify"
+  }, [])
+
   //setting cookie for username
   const myCookie = new Cookies();
   const navigate = useNavigate();
@@ -33,45 +37,51 @@ export default function Login() {
       Verify();
     }
   }
+  const [loading, setLoading] = useState(false)
 
 
   const Verify = () => {
 
     axios({
-      url: Apiurl+"/user/login",
+      url: Apiurl + "/user/login",
       method: "POST",
       params: userDetails
     })
-      .then((res) => {
+      .then(async(res) => {
         if (res.data.correct) {
+          setLoading(true)
+          document.title="Logging in - Trendify"
+          
           myCookie.set("username", res.data.username);
           const username = myCookie.get("username");
 
-          axios({
-            url: Apiurl+"/cart/cart",
+         await axios({
+            url: Apiurl + "/cart/cart",
             method: "GET",
             params: { username }
           })
             .then((res) => {
-              setCart(res.data.list)
-              setFetch(true)
-
+              if(res.data.status){
+                console.log("cart fetched")
+                setCart(res.data.list)
+                setFetch(true)
+                setLoading(false)
+              }
             })
             .catch((err) => {
               console.log(err);
             })
 
-          console.log(cart)
-
-          Swal.fire({
-            icon: 'success',
-            title: 'Login sucesful'
-          }).then((res) => {
-            if (res.isConfirmed) {
-              navigate("/home");
-            }
-          })
-
+          console.log("Cart items : "+cart.length)
+            {!loading&&Swal.fire({
+              icon: 'success',
+              title: 'Login sucesful'
+            }).then((res) => {
+              if (res.isConfirmed) {
+                navigate("/home");
+              }
+            })}
+          
         } else if (res.data.newMail) {
 
           Swal.fire({
@@ -101,7 +111,7 @@ export default function Login() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       })
   }
 
@@ -114,50 +124,12 @@ export default function Login() {
     }
   }, [cart]);
 
-  //to get the list of products from the database
-
-  const [productsList, setProductsList] = useState([]);
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    //to get the list of products
-    axios({
-      url: Apiurl+"/products/getproductlist",
-      method: "GET"
-    })
-      .then((res) => {
-        setProductsList(res.data.list)
-        console.log(productsList)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-
-    //to get the review list
-
-    axios({
-      url: Apiurl+'/others/getreviews',
-      method: 'GET'
-    })
-      .then((res) => {
-        setLoading(false)
-        setReviews(res.data.list)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-
-  }, [])
-  console.log(productsList)
-  localStorage.setItem('productsList', JSON.stringify(productsList))
-  localStorage.setItem('reviews', JSON.stringify(reviews))
 
 
 
   return (
     <div className="login">
-      {loading ? <Loading text="Fetching Data From Database..." /> :
+      {loading?<Loading text="Logging in..."/>:
         <div>
           <div>
             <header className="header-home">

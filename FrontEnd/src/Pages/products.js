@@ -7,6 +7,9 @@ import Apiurl from '../Components/Apiurl.js'
 
 export default function(){
 
+    useEffect(() => {
+        document.title = "Products - Trendify"
+      }, [])
 
     // const [productsList,setProductsList]=useState([]);
     
