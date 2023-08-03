@@ -17,7 +17,7 @@ export default function Display(){
 
     // useEffect(()=>{
     //     axios({
-    //         url: {Apiurl}+"/products/displayitem",
+    //         url: Apiurl+"/products/displayitem",
     //         method: "get",
     //         params: {id}
     //     })

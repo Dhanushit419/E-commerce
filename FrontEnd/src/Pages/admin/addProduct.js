@@ -22,7 +22,7 @@ export default function AddProduct(){
         localStorage.setItem('productsList',JSON.stringify(list))
 
         axios({
-            url:{Apiurl}+"/admin/addproduct",
+            url:Apiurl+"/admin/addproduct",
             method:"POST",
             params:productDetails
         })

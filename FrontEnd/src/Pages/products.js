@@ -12,7 +12,7 @@ export default function(){
     
     // useEffect(()=>{
     //     axios({
-    //         url: {Apiurl}+"/products/getproductlist",
+    //         url: Apiurl+"/products/getproductlist",
     //         method: "GET"
     //     })
     //     .then((res)=>{

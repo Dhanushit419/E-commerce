@@ -33,7 +33,7 @@ export default function Favs(props) {
         localStorage.setItem('cart', JSON.stringify(cart))
 
         axios({
-            url: {Apiurl}+"/cart/addtocart",
+            url: Apiurl+"/cart/addtocart",
             method: "POST",
             params: userDetails
         })

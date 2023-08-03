@@ -20,7 +20,7 @@ export default function Favourites(){
     const [loading,setLoading]=useState(true)
     useEffect(()=>{
         axios({
-            url:{Apiurl}+'/getfavs',
+            url:Apiurl+'/getfavs',
             method:'GET',
             params:{username}
         })

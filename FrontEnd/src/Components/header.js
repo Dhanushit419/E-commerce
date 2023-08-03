@@ -29,7 +29,7 @@ function Header() {
   const SearchedList = () => {
     setLoad(true)
     axios({
-      url: {Apiurl}+"/products/search",
+      url: Apiurl+"/products/search",
       method: "GET",
       params: { searchTerm: document.querySelector('#search').value }
     })

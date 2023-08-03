@@ -38,7 +38,7 @@ export default function Login() {
   const Verify = () => {
 
     axios({
-      url: {Apiurl}+"/user/login",
+      url: Apiurl+"/user/login",
       method: "POST",
       params: userDetails
     })
@@ -48,7 +48,7 @@ export default function Login() {
           const username = myCookie.get("username");
 
           axios({
-            url: {Apiurl}+"/cart/cart",
+            url: Apiurl+"/cart/cart",
             method: "GET",
             params: { username }
           })
@@ -123,7 +123,7 @@ export default function Login() {
   useEffect(() => {
     //to get the list of products
     axios({
-      url: {Apiurl}+"/products/getproductlist",
+      url: Apiurl+"/products/getproductlist",
       method: "GET"
     })
       .then((res) => {
@@ -137,7 +137,7 @@ export default function Login() {
     //to get the review list
 
     axios({
-      url: {Apiurl}+'/others/getreviews',
+      url: Apiurl+'/others/getreviews',
       method: 'GET'
     })
       .then((res) => {

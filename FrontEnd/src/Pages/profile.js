@@ -30,7 +30,7 @@ export default function Profile(){
   useEffect(()=>{
     //console.log(username)
     axios({
-      url:{Apiurl}+'/user/profile',
+      url:Apiurl+'/user/profile',
       method:'GET',
       params:{username}
     })

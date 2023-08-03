@@ -18,7 +18,7 @@ function OrderHistory() {
     const [items, setItems] = useState([])
     useEffect(() => {
         axios({
-            url: {Apiurl}+'/orders/getorderhistory',
+            url: Apiurl+'/orders/getorderhistory',
             method: 'GET',
             params: { username }
         })

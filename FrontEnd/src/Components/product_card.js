@@ -31,7 +31,7 @@ export default function Card(props) {
             setAdd(true)
         }
         // axios({
-        //     url:{Apiurl}+"/cart/checkcart",
+        //     url:Apiurl+"/cart/checkcart",
         //     method:"POST",
         //     params:userDetails
         // })
@@ -44,7 +44,7 @@ export default function Card(props) {
         //     }
         // })
         axios({
-            url: {Apiurl}+"/favs/checkfavs",
+            url: Apiurl+"/favs/checkfavs",
             method: "POST",
             params: userDetails
         })
@@ -72,7 +72,7 @@ export default function Card(props) {
 
         setAdd(true);
         axios({
-            url: {Apiurl}+"/cart/addtocart",
+            url: Apiurl+"/cart/addtocart",
             method: "POST",
             params: userDetails
         })
@@ -87,7 +87,7 @@ export default function Card(props) {
         if (!fav) {
             setFav(true)
             axios({
-                url: {Apiurl}+"/favs/addtofav",
+                url: Apiurl+"/favs/addtofav",
                 method: "POST",
                 params: userDetails
             })
@@ -100,7 +100,7 @@ export default function Card(props) {
         else {
             setFav(false)
             axios({
-                url: {Apiurl}+"/favs/removefromfav",
+                url: Apiurl+"/favs/removefromfav",
                 method: "POST",
                 params: userDetails
             })

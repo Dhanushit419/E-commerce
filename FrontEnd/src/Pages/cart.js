@@ -78,7 +78,7 @@ export default function Cart(){
         //to change in db
         const DeleteDetails={username:username,id:id}
         axios({
-            url:{Apiurl}+'/cart/deletefromcart',
+            url:Apiurl+'/cart/deletefromcart',
             method:'POST',
             params:DeleteDetails
         })
@@ -99,7 +99,7 @@ export default function Cart(){
         setLoading(true)
         if(token){
             axios({
-                url:{Apiurl}+'/orders/orderitem',
+                url:Apiurl+'/orders/orderitem',
                 method:'POST',
                 params:OrderDetails
             })
@@ -133,7 +133,7 @@ export default function Cart(){
             if(res.isConfirmed){
                 setLoading(true)
                 axios({
-                    url:{Apiurl}+'/orders/orderitem',
+                    url:Apiurl+'/orders/orderitem',
                     method:'POST',
                     params:OrderDetails
                 })

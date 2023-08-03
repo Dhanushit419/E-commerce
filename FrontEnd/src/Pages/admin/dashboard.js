@@ -27,7 +27,7 @@ export default function Dashboard(){
 
     useEffect(()=>{
         axios({
-            url:{Apiurl}+'/admin/dashboard',
+            url:Apiurl+'/admin/dashboard',
             method:'GET',
             params:{adminname}
         })

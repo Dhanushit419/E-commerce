@@ -20,7 +20,7 @@ export default function Home(){
 
 //   useEffect(()=>{
 //           axios({
-//               url:{Apiurl}+"/cart/cart",
+//               url:Apiurl+"/cart/cart",
 //               method:"GET",
 //               params:{username}
 //           })
