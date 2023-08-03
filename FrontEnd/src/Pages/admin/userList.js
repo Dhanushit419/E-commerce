@@ -1,13 +1,14 @@
 
 import React,{useEffect,useState} from "react";
 import axios from 'axios';
+import Apiurl from '../../Components/Apiurl.js'
 
 
 export default function Dashboard(){
      const [userlist,setuserlist]=useState([{username:'nantha'}]);
     useEffect(()=>{
         axios({
-            url:'http://localhost:3001/admin/userlist',
+            url:{Apiurl}+'/admin/userlist',
             method:'GET'
             
         })

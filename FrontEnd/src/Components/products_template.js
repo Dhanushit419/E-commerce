@@ -14,6 +14,7 @@ import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
 import GradeRoundedIcon from '@mui/icons-material/GradeRounded';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import axios from "axios";
+import Apiurl from "./Apiurl.js"
 import { Cookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 
@@ -41,7 +42,7 @@ export default function Product(props) {
         }
 
         // axios({
-        //     url:"http://localhost:3001/cart/checkcart",
+        //     url:{Apiurl}+"/cart/checkcart",
         //     method:"POST",
         //     params:userDetails
         // })
@@ -54,7 +55,7 @@ export default function Product(props) {
         //     }
         // })
         axios({
-            url: "http://localhost:3001/favs/checkfavs",
+            url: {Apiurl}+"/favs/checkfavs",
             method: "POST",
             params: userDetails
         })
@@ -81,7 +82,7 @@ export default function Product(props) {
         localStorage.setItem('cart', JSON.stringify(cart))
         setAdd(true);
         axios({
-            url: "http://localhost:3001/cart/addtocart",
+            url: {Apiurl}+"/cart/addtocart",
             method: "POST",
             params: userDetails
         })
@@ -97,7 +98,7 @@ export default function Product(props) {
         if (!fav) {
             setFav(true)
             axios({
-                url: "http://localhost:3001/favs/addtofav",
+                url: {Apiurl}+"/favs/addtofav",
                 method: "POST",
                 params: userDetails
             })
@@ -110,7 +111,7 @@ export default function Product(props) {
         else {
             setFav(false)
             axios({
-                url: "http://localhost:3001/favs/removefromfav",
+                url: {Apiurl}+"/favs/removefromfav",
                 method: "POST",
                 params: userDetails
             })
@@ -145,7 +146,7 @@ export default function Product(props) {
         window.location.reload();
 
         axios({
-            url: 'http://localhost:3001/others/addreview',
+            url: {Apiurl}+'/others/addreview',
             method: 'POST',
             params: Review
         })

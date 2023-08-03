@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Components/header1';
 import axios from 'axios';
+import Apiurl from '../Components/Apiurl.js'
 import { Cookies } from 'react-cookie';
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +18,7 @@ function OrderHistory() {
     const [items, setItems] = useState([])
     useEffect(() => {
         axios({
-            url: 'http://localhost:3001/orders/getorderhistory',
+            url: {Apiurl}+'/orders/getorderhistory',
             method: 'GET',
             params: { username }
         })

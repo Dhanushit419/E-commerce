@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../Components/header";
 import Product_card from "../Components/product_card";
 import axios from 'axios';
+import Apiurl from '../Components/Apiurl.js'
 
 
 export default function(){
@@ -11,7 +12,7 @@ export default function(){
     
     // useEffect(()=>{
     //     axios({
-    //         url: "http://localhost:3001/products/getproductlist",
+    //         url: {Apiurl}+"/products/getproductlist",
     //         method: "GET"
     //     })
     //     .then((res)=>{

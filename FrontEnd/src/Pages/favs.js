@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../Components/header1"
 import { Cookies } from "react-cookie";
 import axios from "axios";
+import Apiurl from '../Components/Apiurl.js'
 import { Button } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useNavigate } from "react-router-dom";
@@ -19,7 +20,7 @@ export default function Favourites(){
     const [loading,setLoading]=useState(true)
     useEffect(()=>{
         axios({
-            url:'http://localhost:3001/getfavs',
+            url:{Apiurl}+'/getfavs',
             method:'GET',
             params:{username}
         })

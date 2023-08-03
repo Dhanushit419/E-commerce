@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import axios from "axios";
+import Apiurl from "./Apiurl.js"
 import Product_card from "../Components/product_card";
 import { Cookies } from "react-cookie";
 import { Link } from "react-router-dom";
@@ -28,7 +29,7 @@ function Header() {
   const SearchedList = () => {
     setLoad(true)
     axios({
-      url: "http://localhost:3001/products/search",
+      url: {Apiurl}+"/products/search",
       method: "GET",
       params: { searchTerm: document.querySelector('#search').value }
     })

@@ -20,7 +20,7 @@ router.post("/orderitem", async (req, res) => {
                 index = docs.rows[0].index
             }
             else {
-                const temp = conn.query("select distinct date from orders")
+                const temp =await conn.query("select distinct date from orders")
                 index = temp.rowCount + 1
             }
 

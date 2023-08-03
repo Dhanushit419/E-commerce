@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
+import Apiurl from "./Apiurl.js"
 export default function Favs(props) {
     const [add, setAdd] = useState(false);
     const myCookie = new Cookies();
@@ -33,7 +33,7 @@ export default function Favs(props) {
         localStorage.setItem('cart', JSON.stringify(cart))
 
         axios({
-            url: "http://localhost:3001/cart/addtocart",
+            url: {Apiurl}+"/cart/addtocart",
             method: "POST",
             params: userDetails
         })

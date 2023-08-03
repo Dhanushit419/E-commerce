@@ -9,6 +9,7 @@ import email from '../images/email.png';
 import { Button } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import axios from "axios";
+import Apiurl from '../Components/Apiurl.js'
 import Swal from 'sweetalert2'
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -25,7 +26,7 @@ export default function Register(){
 
   const RegisterUser = () =>{
     axios({
-        url:"http://localhost:3001/user/register",
+        url:{Apiurl}+"/user/register",
         method:"POST",
         params:userDetails
     })

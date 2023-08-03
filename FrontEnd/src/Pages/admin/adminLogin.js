@@ -5,7 +5,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
-
+import Apiurl from '../../Components/Apiurl.js'
 
 export default function AdminLogin(){
     const myCookie=new Cookies()
@@ -19,7 +19,7 @@ export default function AdminLogin(){
 
     const Verify=()=>{
         axios({
-            url:'http://localhost:3001/admin/verifyadmin',
+            url:{Apiurl}+'/admin/verifyadmin',
             method:'GET',
             params:userDetails
         })

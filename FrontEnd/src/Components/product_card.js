@@ -10,6 +10,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import Apiurl from "./Apiurl.js"
 import { Cookies } from "react-cookie";
 
 
@@ -30,7 +31,7 @@ export default function Card(props) {
             setAdd(true)
         }
         // axios({
-        //     url:"http://localhost:3001/cart/checkcart",
+        //     url:{Apiurl}+"/cart/checkcart",
         //     method:"POST",
         //     params:userDetails
         // })
@@ -43,7 +44,7 @@ export default function Card(props) {
         //     }
         // })
         axios({
-            url: "http://localhost:3001/favs/checkfavs",
+            url: {Apiurl}+"/favs/checkfavs",
             method: "POST",
             params: userDetails
         })
@@ -71,7 +72,7 @@ export default function Card(props) {
 
         setAdd(true);
         axios({
-            url: "http://localhost:3001/cart/addtocart",
+            url: {Apiurl}+"/cart/addtocart",
             method: "POST",
             params: userDetails
         })
@@ -86,7 +87,7 @@ export default function Card(props) {
         if (!fav) {
             setFav(true)
             axios({
-                url: "http://localhost:3001/favs/addtofav",
+                url: {Apiurl}+"/favs/addtofav",
                 method: "POST",
                 params: userDetails
             })
@@ -99,7 +100,7 @@ export default function Card(props) {
         else {
             setFav(false)
             axios({
-                url: "http://localhost:3001/favs/removefromfav",
+                url: {Apiurl}+"/favs/removefromfav",
                 method: "POST",
                 params: userDetails
             })

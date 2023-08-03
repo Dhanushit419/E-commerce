@@ -8,6 +8,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
+import Apiurl from '../Components/Apiurl.js'
 import { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
@@ -29,7 +30,7 @@ export default function Profile(){
   useEffect(()=>{
     //console.log(username)
     axios({
-      url:'http://localhost:3001/user/profile',
+      url:{Apiurl}+'/user/profile',
       method:'GET',
       params:{username}
     })

@@ -14,7 +14,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import Swal from 'sweetalert2'
-import { css } from '@emotion/react';
+import Apiurl from '../Components/Apiurl.js'
 // import Radio from '@mui/material/Radio';
 // import RadioGroup from '@mui/material/RadioGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
@@ -78,7 +78,7 @@ export default function Cart(){
         //to change in db
         const DeleteDetails={username:username,id:id}
         axios({
-            url:'http://localhost:3001/cart/deletefromcart',
+            url:{Apiurl}+'/cart/deletefromcart',
             method:'POST',
             params:DeleteDetails
         })
@@ -99,7 +99,7 @@ export default function Cart(){
         setLoading(true)
         if(token){
             axios({
-                url:'http://localhost:3001/orders/orderitem',
+                url:{Apiurl}+'/orders/orderitem',
                 method:'POST',
                 params:OrderDetails
             })
@@ -133,7 +133,7 @@ export default function Cart(){
             if(res.isConfirmed){
                 setLoading(true)
                 axios({
-                    url:'http://localhost:3001/orders/orderitem',
+                    url:{Apiurl}+'/orders/orderitem',
                     method:'POST',
                     params:OrderDetails
                 })

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Product from "../Components/products_template";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import Apiurl from '../Components/Apiurl.js'
 
 export default function Display(){
     const {id} =useParams();
@@ -16,7 +17,7 @@ export default function Display(){
 
     // useEffect(()=>{
     //     axios({
-    //         url: "http://localhost:3001/products/displayitem",
+    //         url: {Apiurl}+"/products/displayitem",
     //         method: "get",
     //         params: {id}
     //     })

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Button } from "@mui/material"
 import TextField from '@mui/material/TextField';
+import { useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 // const Tabledata = (props) => {
 //     const [display1, setdisplay1] = useState(false);
 //     const [stockValue, setStockValue] = useState(0);
@@ -19,6 +21,8 @@ import TextField from '@mui/material/TextField';
 // }
 
 export default function Dashboard() {
+    const navigate=useNavigate()
+    const myCookie=new Cookies
     const ProductList=JSON.parse(localStorage.getItem('productsList'))
     const [list,setList]=useState(ProductList)
     const [display1, setdisplay1] = useState(false);
@@ -33,7 +37,10 @@ export default function Dashboard() {
         localStorage.setItem('productsList', JSON.stringify(updatedList))
 
       };
-
+      const Logout =()=>{
+        myCookie.remove('admin')
+        navigate('/adminlogin')
+    }
     const data = [
         { name: 'Hairband', sold: 4000, amt: 24000, imgsrc: "https://m.media-amazon.com/images/I/81IG62hC1oL._AC_UF1000,1000_QL80_.jpg" },
         { name: 'Laptop', sold: 3000, amt: 22100, imgsrc: "https://m.media-amazon.com/images/I/91oF9q-jE5L.jpg" },
@@ -44,8 +51,8 @@ export default function Dashboard() {
     return (
         <div className='plmain' style={{ backgroundColor: 'whitesmoke' }}>
             <div className='plmain2'>
-                <Button variant="contained">Dashboard</Button>
-                <Button variant="contained">Logout</Button>
+                <Button variant="contained" onClick={()=>{navigate("/dashboard")}}>Dashboard</Button>
+                <Button variant="contained" onClick={Logout}>Logout</Button>
             </div>
             <br></br>
             <br></br>
@@ -56,7 +63,7 @@ export default function Dashboard() {
             </div>
             <br></br>
             <div className="plmain4">
-                <p >No of products: 70</p>
+                <p >No of products: {list.length}</p>
             </div>
             <br></br>
             <br></br>

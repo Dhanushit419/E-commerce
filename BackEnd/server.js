@@ -26,5 +26,5 @@ app.use(cors());
 
 
 connectDB().then(()=>{
-    app.listen(3001, () => console.log("App is running"));
+    app.listen(3001 ||process.env.PORT, () => console.log("App is running"));
 })

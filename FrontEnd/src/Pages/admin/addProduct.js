@@ -1,11 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import Apiurl from '../../Components/Apiurl'
 import TextField from '@mui/material/TextField';
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
-
+import Swal from "sweetalert2";
 export default function AddProduct(){
     const myCookie=new Cookies
     const navigate=useNavigate()
@@ -21,14 +22,24 @@ export default function AddProduct(){
         localStorage.setItem('productsList',JSON.stringify(list))
 
         axios({
-            url:"http://localhost:3001/admin/addproduct",
+            url:{Apiurl}+"/admin/addproduct",
             method:"POST",
             params:productDetails
         })
         .then((res)=>{
             if(res.data.added){
-                alert(res.data.name+" Added Succesfully with id = " + res.data.id)
-                window.location.reload();
+                Swal.fire({
+                    icon:'success',
+                    title:'Product Added To Database',
+                    text:'ID :'+res.data.id.toString()+', Name: '+res.data.name,
+                    confirmButtonText:'Add New',
+                })
+                .then((res)=>{
+                    if(res.isConfirmed){
+                        window.location.reload();
+                    }
+                })
+                
             }
             else{
                 alert("Error in adding Your Product !")
@@ -41,7 +52,7 @@ export default function AddProduct(){
 
     const Logout =()=>{
         myCookie.remove('admin')
-        navigate('/login')
+        navigate('/adminlogin')
     }
 
     return(

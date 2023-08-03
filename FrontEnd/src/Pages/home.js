@@ -9,6 +9,7 @@ import ChatIcon from "../Components/ChatBot/chaticon";
 import { Cookies } from "react-cookie";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Apiurl from '../Components/Apiurl.js'
 import Toplist from '../Components/topproducts';
 
 
@@ -19,7 +20,7 @@ export default function Home(){
 
 //   useEffect(()=>{
 //           axios({
-//               url:"http://localhost:3001/cart/cart",
+//               url:{Apiurl}+"/cart/cart",
 //               method:"GET",
 //               params:{username}
 //           })

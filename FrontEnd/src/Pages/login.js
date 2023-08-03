@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
 import axios from 'axios';
+import Apiurl from '../Components/Apiurl.js'
 import LoginIcon from '@mui/icons-material/Login';
 import Swal from 'sweetalert2'
 import LockIcon from '@mui/icons-material/Lock';
@@ -37,7 +38,7 @@ export default function Login() {
   const Verify = () => {
 
     axios({
-      url: "http://localhost:3001/user/login",
+      url: {Apiurl}+"/user/login",
       method: "POST",
       params: userDetails
     })
@@ -47,7 +48,7 @@ export default function Login() {
           const username = myCookie.get("username");
 
           axios({
-            url: "http://localhost:3001/cart/cart",
+            url: {Apiurl}+"/cart/cart",
             method: "GET",
             params: { username }
           })
@@ -122,7 +123,7 @@ export default function Login() {
   useEffect(() => {
     //to get the list of products
     axios({
-      url: "http://localhost:3001/products/getproductlist",
+      url: {Apiurl}+"/products/getproductlist",
       method: "GET"
     })
       .then((res) => {
@@ -136,7 +137,7 @@ export default function Login() {
     //to get the review list
 
     axios({
-      url: 'http://localhost:3001/others/getreviews',
+      url: {Apiurl}+'/others/getreviews',
       method: 'GET'
     })
       .then((res) => {

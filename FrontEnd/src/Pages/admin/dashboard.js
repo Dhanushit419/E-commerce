@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis ,Tooltip} from 'recharts';
 import { Button } from "@mui/material";
 import Loading from "../../Components/loading";
+import Apiurl from '../../Components/Apiurl.js'
 
 export default function Dashboard(){
     const myCookie=new Cookies
@@ -26,7 +27,7 @@ export default function Dashboard(){
 
     useEffect(()=>{
         axios({
-            url:'http://localhost:3001/admin/dashboard',
+            url:{Apiurl}+'/admin/dashboard',
             method:'GET',
             params:{adminname}
         })
@@ -51,7 +52,7 @@ export default function Dashboard(){
 
     const Logout =()=>{
         myCookie.remove('admin')
-        navigate('/login')
+        navigate('/adminlogin')
     }
     const maxRevenue = Math.max(...Revenue.map(entry => entry.revenue));
     const maxProductsPurchased = Math.max(...Revenue.map(entry => entry.ProductsPurchased));
@@ -101,6 +102,7 @@ export default function Dashboard(){
                         <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',columnGap:'20px'}}>
                                  <p style={{fontSize:'45px'}}>{stock}</p>
                                  <p style={{fontFamily:'sans-serif'}}>InStock</p>
+                                 <p style={{fontFamily:'sans-serif'}}>Click here to Add Product</p>
                             </div>
                         </div>
                     </div>
