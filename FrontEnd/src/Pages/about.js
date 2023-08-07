@@ -21,11 +21,10 @@ export default function About(){
         <div className="about-section">
         <div className="inner-container">
             <h1>About us</h1>
-            <p className="text"> TrenDify aims to create an E-Commerce
-                application which is user-friendly to all types of
-                users and to give assistance to the users. It helps the user 
-            to search their query by Image . It has a Chat-Bot which helps the user to 
-        get easy assistance and to know about the product.</p>
+            <p className="text"> Trendify is a cutting-edge shopping app crafted with passion and creativity
+             by a dedicated team of three individuals from the prestigious IT department
+              of Anna University. We are committed to revolutionizing the way you shop,
+               making it an unforgettable and enjoyable experience.</p>
         <br />
         <h2><em>Hope You Enjoyed it !❤</em></h2>
         </div>

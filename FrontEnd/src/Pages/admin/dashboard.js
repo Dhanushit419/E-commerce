@@ -8,6 +8,32 @@ import { Button } from "@mui/material";
 import Loading from "../../Components/loading";
 import Apiurl from '../../Components/Apiurl.js'
 
+const AnimatedNumber = ({ value }) => {
+    const [currentValue, setCurrentValue] = useState(0);
+  
+    useEffect(() => {
+      let frame;
+      const step = value / 400;
+      const updateValue = () => {
+        setCurrentValue((prevValue) => {
+          if (prevValue < value) {
+            return Math.min(prevValue + step, value);
+          }
+          cancelAnimationFrame(frame);
+          return prevValue;
+        });
+        frame = requestAnimationFrame(updateValue);
+      };
+      frame = requestAnimationFrame(updateValue);
+      return () => cancelAnimationFrame(frame);
+    }, [value]);
+  
+    return (
+      <span style={{fontSize:'45px'}}>{Math.floor(currentValue).toLocaleString()}</span>
+    );
+  };
+
+
 export default function Dashboard(){
     useEffect(() => {
         document.title = "Admin Dashboard - Trendify"
@@ -86,25 +112,25 @@ export default function Dashboard(){
                     <div style={{display:'flex',flexDirection:'row',justifyContent:'space-around'}}>
                         <div className="db-card" onClick={()=>navigate('/productlist')}>
                             <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',columnGap:'20px'}}>
-                                 <p style={{fontSize:'45px'}}>{productCount}</p>
+                                 <AnimatedNumber value={productCount} />
                                  <p style={{fontFamily:'sans-serif'}}>Products</p>
                             </div>
                         </div>
                         <div className="db-card" onClick={()=>navigate('/userlist')}>
                         <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',columnGap:'20px'}}>
-                                 <p style={{fontSize:'45px'}}>{userCount}</p>
+                        <AnimatedNumber value={userCount} /> 
                                  <p style={{fontFamily:'sans-serif'}}>Happy customers</p>
                             </div>
                         </div>
                         <div className="db-card" onClick={()=>navigate('/revenue')}>
                         <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',columnGap:'20px'}}>
-                                 <p><CurrencyRupeeIcon fontSize="large"/><span style={{fontSize:'45px'}}>{totalRevenue}</span></p>
+                                 <p><CurrencyRupeeIcon fontSize="large"/><span style={{fontSize:'45px'}}><AnimatedNumber value={totalRevenue} /></span></p>
                                  <p style={{fontFamily:'sans-serif'}}>Revenue</p>
                             </div>
                         </div>
                         <div className="db-card" onClick={()=>navigate('/addproduct')}>
                         <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',columnGap:'20px'}}>
-                                 <p style={{fontSize:'45px'}}>{stock}</p>
+                        <AnimatedNumber value={stock} />
                                  <p style={{fontFamily:'sans-serif'}}>InStock</p>
                                  <p style={{fontFamily:'sans-serif'}}>Click here to Add Product</p>
                             </div>

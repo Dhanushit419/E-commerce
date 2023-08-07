@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import ShoppingCartCheckoutRoundedIcon from '@mui/icons-material/ShoppingCartCheckoutRounded';
 import CurrencyRupeeRoundedIcon from '@mui/icons-material/CurrencyRupeeRounded';
 import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
@@ -19,6 +20,8 @@ export default function Card(props) {
     const myCookie = new Cookies();
     const username = myCookie.get("username");
 
+    const [outOfStock, setStockStatus] = useState(props.stock)
+    console.log(props.stock)
     const [add, setAdd] = useState(false);
     const [fav, setFav] = useState(false);
 
@@ -44,7 +47,7 @@ export default function Card(props) {
         //     }
         // })
         axios({
-            url: Apiurl+"/favs/checkfavs",
+            url: Apiurl + "/favs/checkfavs",
             method: "POST",
             params: userDetails
         })
@@ -71,7 +74,7 @@ export default function Card(props) {
 
         setAdd(true);
         axios({
-            url: Apiurl+"/cart/addtocart",
+            url: Apiurl + "/cart/addtocart",
             method: "POST",
             params: userDetails
         })
@@ -86,7 +89,7 @@ export default function Card(props) {
         if (!fav) {
             setFav(true)
             axios({
-                url: Apiurl+"/favs/addtofav",
+                url: Apiurl + "/favs/addtofav",
                 method: "POST",
                 params: userDetails
             })
@@ -99,7 +102,7 @@ export default function Card(props) {
         else {
             setFav(false)
             axios({
-                url: Apiurl+"/favs/removefromfav",
+                url: Apiurl + "/favs/removefromfav",
                 method: "POST",
                 params: userDetails
             })
@@ -132,13 +135,16 @@ export default function Card(props) {
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-around" }}>
 
-                    {add ?
-                        <IconButton className='buttonn' variant='contained'>
-                            <CheckCircleRoundedIcon sx={{ color: 'green' }} />
-                        </IconButton> :
-                        <IconButton className='buttonn' variant='contained' onClick={handleChange}>
-                            <AddShoppingCartIcon />
-                        </IconButton>
+                    {outOfStock<=0? <IconButton className='buttonn' variant='contained' disabled>
+                        <SentimentDissatisfiedIcon />
+                    </IconButton>
+                        : add ?
+                            <IconButton className='buttonn' variant='contained'>
+                                <CheckCircleRoundedIcon sx={{ color: 'green' }} />
+                            </IconButton> :
+                            <IconButton className='buttonn' variant='contained' onClick={handleChange}>
+                                <AddShoppingCartIcon />
+                            </IconButton>
                     }
 
                     {fav ?

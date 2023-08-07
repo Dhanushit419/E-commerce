@@ -41,7 +41,7 @@ export default function(){
                     price={product.price}
                     discount={product.discount}
                     image={product.imgurl}
-                    
+                     stock={product.stock}
                     />
                 )
             }

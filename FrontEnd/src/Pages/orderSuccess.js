@@ -29,7 +29,7 @@ export default function OrderSuccess(){
         <div style={{display:'flex',width:'100%',justifyContent:"center",alignItems:'center',flexDirection:'column'}}>
             <h2 className="fade-in-text">Order Placed Successfully ! ❤️</h2>
             <br/>
-        <Button variant="filled" sx={{color:'green',outline:'green'}} onClick={()=>{navigate("/orders")}} >Go to Orders</Button>
+        <Button variant="filled" sx={{color:'green',outline:'green'}} onClick={()=>{navigate("/orders")}} autoFocus>Go to Orders</Button>
         </div>
     </div>
         

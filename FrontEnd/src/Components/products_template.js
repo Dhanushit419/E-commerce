@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import ChatIcon from "./ChatBot/chaticon";
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
@@ -26,9 +27,10 @@ export default function Product(props) {
     const Currentid = Number(id)
     const username = myCookie.get("username");
 
+    const [outOfStock,setStockStatus]=useState(props.stock)
     const [add, setAdd] = useState(false);
     const [fav, setFav] = useState(false);
-
+    console.log(props.stock)
     const CurrentItem = { id: Currentid, name: props.name, price: props.price, imgurl: props.image, quantity: 1 }
     console.log(CurrentItem)
 
@@ -170,7 +172,11 @@ export default function Product(props) {
                         <div style={{ display: "flex", justifyContent: "space-between", margin: "40px" }}>
 
 
-                            {add ?
+                            {outOfStock<=0?
+                            <Button startIcon={<SentimentDissatisfiedIcon fontSize="large" />} className='buttonn' variant='contained' disabled>
+                            Out of Stock
+                            </Button>
+                            :add ?
                                 <Button startIcon={<CheckCircleRoundedIcon fontSize="large" />} className='buttonn' variant='contained' sx={{ backgroundColor: "green" }}>
                                     Added To Cart
                                 </Button> :
@@ -203,9 +209,9 @@ export default function Product(props) {
                     </div>
 
                     {/* <GradeRoundedIcon sx={{color:'gold'}} fontSize="small"/>
-            <GradeRoundedIcon sx={{color:'gold'}} fontSize="small"/>
-            <GradeRoundedIcon sx={{color:'gold'}} fontSize="small"/>
-            <GradeRoundedIcon sx={{color:'gold'}} fontSize="small"/> */}
+                    <GradeRoundedIcon sx={{color:'gold'}} fontSize="small"/>
+                    <GradeRoundedIcon sx={{color:'gold'}} fontSize="small"/>
+                    <GradeRoundedIcon sx={{color:'gold'}} fontSize="small"/> */}
 
                     <br /><br />
                     <div style={{ display: "inline-flex", alignItems: 'center' }}>
@@ -215,9 +221,9 @@ export default function Product(props) {
                     <div style={{ display: "inline-flex", alignItems: 'center' }}>
                         <LocalOfferRoundedIcon /><span style={{ color: 'green' }}>{props.discount} % discount . Only @ TrenDify</span>
                     </div><br /><br />
-                    <p style={{ fontSize: '18px', fontWeight: "1rem", color: '#001717' }}>In Stock : {props.stock}</p>
+                    <p style={{ fontSize: '18px', fontWeight: "1rem", color: '#001717' }}>In Stock : {outOfStock>0?props.stock:<span>Out Of Stock</span>}</p>
                     <br />
-                    <p style={{ fontSize: '18px', fontWeight: "1rem", color: '#001717' }}>Descrption:</p>
+                    <p style={{ fontSize: '18px', fontWeight: "1rem", color: '#001717' }}>Description:</p>
                     <br />
                     <p>
                         {props.desc}
@@ -264,7 +270,12 @@ export default function Product(props) {
 
                         <br /><br /><br />
                     </form>
-                    {add ?
+                    {outOfStock<=0?
+                            <Button startIcon={<SentimentDissatisfiedIcon fontSize="large" />} className='buttonn' variant='contained' disabled>
+                            Out of Stock
+                            </Button>
+                            :
+                            add ?
                         <Button startIcon={<CheckCircleRoundedIcon fontSize="large" />} className='buttonn' variant='contained' sx={{ backgroundColor: "green" }}>
                             Added To Cart
                         </Button> :
