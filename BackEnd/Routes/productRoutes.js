@@ -8,8 +8,8 @@ const router=express.Router()
 router.get("/getproductlist", async (req, res) => {
     var result = [];
     try {
-        const docs = await conn.query("select * from products")
-        //  console.log(docs)
+        const docs = await conn.query("select * from products order by stock desc")
+        //console.log(docs)
         docs.rows.forEach(row => {
             result.push({
                 id: row.id,
