@@ -21,7 +21,7 @@ export default function Card(props) {
     const username = myCookie.get("username");
 
     const [outOfStock, setStockStatus] = useState(props.stock)
-    console.log(props.stock)
+   // console.log(props.stock)
     const [add, setAdd] = useState(false);
     const [fav, setFav] = useState(false);
 

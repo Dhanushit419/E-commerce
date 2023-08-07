@@ -24,8 +24,8 @@ export default function Header1() {
           </div>
           <div className="header-buttons">
             <a href="\products" className="button">Products</a>
-            <a href="\cart" className="button">Cart<ShoppingCartIcon fontSize="small" /></a>
             <a href="\profile" className="button">Profile</a>
+            <a href="/about" className="button" >About</a>
 
           </div>
 

@@ -29,7 +29,7 @@ const AnimatedNumber = ({ value }) => {
     }, [value]);
   
     return (
-      <span style={{fontSize:'45px'}}>{Math.floor(currentValue).toLocaleString()}</span>
+      <span style={{fontSize:'43px'}}>{Math.floor(currentValue).toLocaleString()}</span>
     );
   };
 

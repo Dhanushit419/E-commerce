@@ -15,7 +15,7 @@ export default function About(){
         <div className='about1'>
                  <header className='header-home'>
       <a href="\home" className="button">Home</a>
-          <a href='\about' className="button">About</a>
+      <a href="\products" className="button">Products</a>
           {username?<a href="\profile" className="button">Profile</a>:<a href="/login" className="button">Login</a>}
       </header>
         <div className="about-section">

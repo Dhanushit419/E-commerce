@@ -25,6 +25,7 @@ function Header() {
   const [productsList, setProductsList] = useState([]);
   const [searched, searchedstate] = useState(false);
   const [load, setLoad] = useState(false)
+  const [modelLoading,setModelLoading]=useState(true)
 
   const SearchedList = () => {
     console.log("Search Request sent to Backend for : "+document.querySelector('#search').value)
@@ -32,7 +33,7 @@ function Header() {
     axios({
       url: Apiurl+"/products/search",
       method: "GET",
-      params: { searchTerm: document.querySelector('#search').value }
+      params: { searchTerm: document.querySelector('#search').value.toLowerCase() }
     })
       .then((res) => {
        // console.log(res)
@@ -60,6 +61,7 @@ function Header() {
     try {
       const model = await mobilenet.load();
       setModel(model)
+      setModelLoading(false)
       console.log("Model loaded successfully 👍")
     }
     catch (err) {
@@ -132,13 +134,15 @@ function Header() {
             <div className="header-search-bar">
               <button className="header-search-button" id="searchButton" onClick={SearchedList}><SearchIcon sx={{ color: "white" }} /></button>
               <input type="file" accept="image/*" onChange={uploadImage} ref={imageRef} style={{ display: 'none' }} />
+              {modelLoading?<button className="header-search-button img" ><img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" style={{height:'20px',width:'20px'}} alt="" /></button>
+              :
               <button className="header-search-button img" onClick={uploadTrigger}><ImageSearchIcon sx={{ color: "white" }} /></button>
+              }
             </div>
           </div>
           <div className="header-buttons">
             <a href="/home" className="button">Home</a>
-            <a href="/cart" className="button">Cart<ShoppingCartIcon fontSize="small" /></a>
-            <a href="/favs" className="button" ><FavoriteIcon />Favorites</a>
+            <a href="/profile" className="button" >Profile</a>
             <a href='/about' className="button">About</a>
 
           </div>

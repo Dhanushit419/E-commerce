@@ -15,24 +15,15 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import Swal from 'sweetalert2'
 import Apiurl from '../Components/Apiurl.js'
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-// import {PaymentElement} from '@stripe/react-stripe-js';
-// import {loadStripe} from '@stripe/stripe-js';
 import StripeCheckout from 'react-stripe-checkout';
 import Loading from "../Components/loading";
-
-// const stripePromise = loadStripe('pk_test_51NZRPASBIKkbBLStupcXbanKIP1htZLKPh0NDRUyxeMcuEMw4S8dqf6p5f3FLNbLLz3pZoqCyYGTr9W3Dp2rSpVS008byxyHHp');
-// const options = {
-//     clientSecret: 'pk_test_51NZRPASBIKkbBLStupcXbanKIP1htZLKPh0NDRUyxeMcuEMw4S8dqf6p5f3FLNbLLz3pZoqCyYGTr9W3Dp2rSpVS008byxyHHp',
-//   };
 
 export default function Cart() {
     useEffect(() => {
         document.title = "Cart - Trendify"
     }, [])
+
+    const productsList=JSON.parse(localStorage.getItem('productsList'))
 
     const myCookie = new Cookies;
     const navigate = useNavigate();
@@ -56,11 +47,15 @@ export default function Cart() {
         setTotal(totalPrice);
     };
 
-    const AddQuantity = (index) => {
-        cart[index].quantity += 1;
-        localStorage.setItem('cart', JSON.stringify(cart))
-        setCart([...cart]);
-        calculateTotal()
+    const AddQuantity = (index,id,quantity) => {
+        const checkStock=productsList.find((product) => product.id === id);
+        if(quantity<checkStock.stock){
+            cart[index].quantity += 1;
+            localStorage.setItem('cart', JSON.stringify(cart))
+            setCart([...cart]);
+            calculateTotal()
+        }
+
 
     }
 
@@ -123,6 +118,7 @@ export default function Cart() {
     const OrderDetails = { username: username, items: cart, date: date }
 
     const Order = () => {
+        {myCookie.get("username") ?
         Swal.fire({
             imageUrl: 'https://i.ibb.co/fvdZ0vg/favpng-payment-gateway-e-commerce-payment-system.png',
             title: 'Payment Options',
@@ -191,6 +187,22 @@ export default function Cart() {
                   pay.open();
             }
         })
+    :
+    Swal.fire({
+        icon:'error',
+        title:"It seems you are Not Logged in !",
+        text:"Please login to order.... ",
+        confirmButtonText:"Login",
+        confirmButtonColor:"#1565c0",
+
+    })
+    .then((res)=>{
+        if(res.isConfirmed){
+            navigate("/login");
+        }
+    })
+
+}
 
     }
 
@@ -228,7 +240,7 @@ export default function Cart() {
                                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                     <IconButton id='dec' onClick={() => { ReduceQuantity(index, item.quantity) }}><IndeterminateCheckBoxOutlinedIcon /></IconButton>
                                                     {item.quantity}
-                                                    <IconButton id='increase' onClick={() => { AddQuantity(index) }}><AddBoxOutlinedIcon /></IconButton>
+                                                    <IconButton id='increase' onClick={() => { AddQuantity(index,item.id,item.quantity) }}><AddBoxOutlinedIcon /></IconButton>
                                                 </div>
                                             </td>
 
