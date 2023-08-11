@@ -24,6 +24,7 @@ var conn = new pg.Client({
 //checking connectivity
 const connectDB = async () => {
     try {
+      console.log("Connecting....")
       await conn.connect();
       console.log("Connected to db");
     } catch (err) {

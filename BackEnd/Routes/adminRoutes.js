@@ -109,15 +109,17 @@ router.get("/userlist", async (req, res) => {
         const docs = await conn.query("select * from customer")
 
         // console.log(docs)
-        docs.rows.forEach(row => {
+        for (const row of docs.rows) {
+            const temp = await conn.query("select * from orders where username=$1", [row.username]);
             result.push({
                 username: row.username,
                 email: row.email,
                 mobile_num: row.mobile_num,
                 city: row.city,
-                address: row.address
+                address: row.address,
+                count: temp.rowCount
             })
-        })
+        }
         console.log(result.length + " users");
     }
     catch (err) {

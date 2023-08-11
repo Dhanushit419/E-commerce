@@ -150,8 +150,8 @@ export default function Cart() {
             else if (res.isDenied) {
                 //setPayment(true)
                 var options ={
-                    key :"rzp_test_SIqL4c9WafnwSd",
-                    key_secret : "vHQZU40tzswxKXl6d8df7wQp" ,
+                    key :"rzp_test_tF9FisDGViqYKW",
+                    key_secret : "MhPk8JsNgU4GZ5upfYLtlse7" ,
                     amount: Total *100,
                     currency: "INR" ,
                     name: "Trendify - Shopping Website",
