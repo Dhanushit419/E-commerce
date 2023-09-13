@@ -13,6 +13,8 @@ import * as mobilenet from "@tensorflow-models/mobilenet";
 
 function Header() {
   const myCookie = new Cookies();
+  const queryParameters = new URLSearchParams(window.location.search)
+  const name = queryParameters.get("name");
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -68,6 +70,12 @@ function Header() {
       console.log("Error in Loading Mobilenet Model : " + err.message)
     }
   }
+  useEffect(() => {
+    document.querySelector('#search').value = name;
+    name && SearchedList();
+    name && searchedstate(true);
+    loadModel()
+  }, [])
 
   useEffect(() => {
     loadModel()
@@ -116,8 +124,6 @@ function Header() {
     }
     // console.log(imageUrl)
   }
-
-
 
 
   return (

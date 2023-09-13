@@ -4,7 +4,7 @@ import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import IconButton from '@mui/material/IconButton';
 import Footer from '../Components/footer';
 import Card from '../Components/home_card';
-import ChatIcon from "../Components/ChatBot/chaticon";
+import ChatBot from '../Components/ChatBot/chatBot';
 import { Cookies } from "react-cookie";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -58,7 +58,7 @@ export default function Home() {
           <IconButton className="search-button img" href='/products' type='file'><ImageSearchIcon sx={{ color: "white" }} /></IconButton>
         </div>
       </div>
-      <ChatIcon />
+      <ChatBot />
 
       <h1 className='mid' >TrenDify  ~ Top Deals </h1>
 

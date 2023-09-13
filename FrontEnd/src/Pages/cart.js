@@ -17,6 +17,8 @@ import Swal from 'sweetalert2'
 import Apiurl from '../Components/Apiurl.js'
 import StripeCheckout from 'react-stripe-checkout';
 import Loading from "../Components/loading";
+import ChatBot from '../Components/ChatBot/chatBot';
+
 
 export default function Cart() {
     useEffect(() => {
@@ -208,7 +210,7 @@ export default function Cart() {
 
     return (
         <div className="cart">
-
+            <ChatBot/>
             {loading ? <Loading text="Processing Your Order Request" />
                 : <div>
                     <Header /><div className="card-container" >

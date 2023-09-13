@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import Loading from '../Components/loading';
+import ChatBot from '../Components/ChatBot/chatBot';
 
 function OrderHistory() {
     useEffect(() => {
@@ -36,6 +37,8 @@ function OrderHistory() {
 
     return (
         <div className='ordersmain'>
+                        <ChatBot/>
+
             {loading ? <div>
                 <div className='h1'>
                     <Header />

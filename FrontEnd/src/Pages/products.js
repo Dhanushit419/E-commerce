@@ -3,6 +3,7 @@ import Header from "../Components/header";
 import Product_card from "../Components/product_card";
 import axios from 'axios';
 import Apiurl from '../Components/Apiurl.js'
+import ChatBot from '../Components/ChatBot/chatBot';
 
 
 export default function(){
@@ -31,21 +32,26 @@ export default function(){
 
 
     return(
-        <div className="product-card" >
-            <Header/>
-            {
-                productsList.map( product =>
-                    <Product_card
-                    id={product.id}
-                    name={product.name} 
-                    price={product.price}
-                    discount={product.discount}
-                    image={product.imgurl}
-                     stock={product.stock}
-                    />
-                )
-            }
+        <div>
             
+        <div className="product-card" >
+                {/* <ChatBot/> */}
+
+                <Header/>
+                {
+                    productsList.map( product =>
+                        <Product_card
+                        id={product.id}
+                        name={product.name} 
+                        price={product.price}
+                        discount={product.discount}
+                        image={product.imgurl}
+                         stock={product.stock}
+                        />
+                    )
+                }
+                
+            </div>
         </div>
     );
 }

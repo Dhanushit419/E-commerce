@@ -1,6 +1,7 @@
 import React ,{useEffect}from 'react';
 import Footer from '../Components/footer';
 import { Cookies } from 'react-cookie';
+import ChatBot from '../Components/ChatBot/chatBot';
 
 
 
@@ -12,6 +13,7 @@ export default function About(){
     const myCookie=new Cookies();
     const username=myCookie.get('username');
     return (
+        
         <div className='about1'>
                  <header className='header-home'>
       <a href="\home" className="button">Home</a>
@@ -30,6 +32,8 @@ export default function About(){
         </div>
         </div>
         <Footer />
+        <ChatBot/>
+
     </div>
     );
 }

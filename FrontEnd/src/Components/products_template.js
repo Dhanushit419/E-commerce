@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-import ChatIcon from "./ChatBot/chaticon";
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import ShoppingCartCheckoutRoundedIcon from '@mui/icons-material/ShoppingCartCheckoutRounded';
@@ -18,6 +17,8 @@ import axios from "axios";
 import Apiurl from "./Apiurl.js"
 import { Cookies } from "react-cookie";
 import { useParams } from "react-router-dom";
+import ChatBot from './ChatBot/chatBot';
+
 
 
 export default function Product(props) {
@@ -285,9 +286,8 @@ export default function Product(props) {
                     }
                     <br /><br /><br />
                 </div>
-                <ChatIcon />
             </div>
-
+            <ChatBot/>
             <Footer />
         </div>
     );

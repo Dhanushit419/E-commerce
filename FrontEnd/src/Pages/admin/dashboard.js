@@ -122,7 +122,7 @@ export default function Dashboard(){
                                  <p style={{fontFamily:'sans-serif'}}>Happy customers</p>
                             </div>
                         </div>
-                        <div className="db-card" onClick={()=>navigate('/revenue')}>
+                        <div className="db-card">
                         <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',columnGap:'20px'}}>
                                  <p><CurrencyRupeeIcon fontSize="large"/><span style={{fontSize:'45px'}}><AnimatedNumber value={totalRevenue} /></span></p>
                                  <p style={{fontFamily:'sans-serif'}}>Revenue</p>
