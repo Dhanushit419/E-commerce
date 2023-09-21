@@ -6,7 +6,6 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Apiurl from "./Apiurl.js";
-import ChatBot from './ChatBot/chatBot';
 
 export default function Favs(props) {
     const [add, setAdd] = useState(false);
@@ -48,9 +47,9 @@ export default function Favs(props) {
     }
 
     return (
-<div>
-<ChatBot/>
 <tr>
+
+{/* <tr> */}
             <td>{props.index + 1}</td>
             <td><Link to={`/view/productid/${props.id}`}><img src={props.img} alt="" height="80px" width="80px" /></Link></td>
             <td>{props.name}</td>
@@ -64,7 +63,7 @@ export default function Favs(props) {
                     </Button>
                 }
             </td>
-        </tr>
-</div>
+        {/* </tr> */}
+</tr>
     )
 }

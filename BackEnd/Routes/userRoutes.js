@@ -1,6 +1,6 @@
 import { conn } from "../dbconfig.js";
 import  express  from "express";
-
+import nodemailer from 'nodemailer';
 const router=express.Router()
 
 
@@ -9,15 +9,15 @@ const router=express.Router()
 router.post("/register", async (req, res) => {
     const data = req.query
     console.log(data)
-
+    verifyEmail(data.email);
     const response = { newUser: true, uniqueUsername: false }
     // console.log(response)
 
     try {
         const docs = await conn.query("SELECT * FROM customer where email=$1", [data.email])
-        const docs1 = await conn.query("SELECT * FROM customer where username=$1", [data.username])
+       // const docs1 = await conn.query("SELECT * FROM customer where username=$1", [data.username])
 
-        if (docs.rowCount != 0 && docs1.rowCount != 0) {
+        if (docs.rowCount != 0) {
             response.newUser = false
         }
     }
@@ -106,6 +106,31 @@ router.get("/profile", async (req, res) => {
     res.json(response)
 })
 
+const verifyEmail = async (email) => {
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'dhanushit419@gmail.com',
+            pass: 'chec mqfk cmmm sewh',
+        },
+    });
+
+    const mailOptions = {
+        from: 'dhanushit419@gmail.com',
+        to: 'sdhanushk67@gmail.com',
+        subject: 'Email Verification Test',
+        text: 'This is a test email for verification.',
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        // If no error occurred, the email is valid and deliverable
+        console.log("sent");
+    } catch (err) {
+        // An error occurred during verification or the email is not deliverable
+        console.log("Err "+err.message)
+    }
+};
 
 
 export default router;

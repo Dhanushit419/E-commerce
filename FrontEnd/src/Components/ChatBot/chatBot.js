@@ -64,8 +64,20 @@ const [items, setItems] = useState([]);
       options:[
         {value:'history',label:'Get my Order History',trigger:"history"},
         {value:'search',label:'Search for an item',trigger:"search"},
-        {value:'Name',label:'Having issue with an item',trigger:"Name"}
+        {value:'Name',label:'Having issue with an item',trigger:"Name"},
+        {value:'Contact',label:'Contact us',trigger:"Contact"}
+        
       ],
+    },
+    {
+      id:"Contact",
+      component: (
+        <div>
+          Dhanushkumar Sankar - 9025635359 <br />
+          Aathithyan Maariraj - 7338997851 <br />
+          Shashi SB           - 8925064607
+        </div>
+      ),      trigger:'g1',
     },
     {
       id: 'history',
@@ -153,47 +165,6 @@ const [items, setItems] = useState([]);
           {value:"go back", label:"go back to helping menu", trigger:"waiting"}
         ]
     },
-    /*
-    {
-      id:'issues',
-      options:[
-        {value: 'Costumes',label: 'Costumes',trigger: "Costumes" },
-        {value: 'Mobiles',label: 'Mobiles',trigger: "Mobiles" },
-        {value: 'Laptops',label: 'Laptops',trigger: "Laptops"},
-      ],
-    },
-    {
-      id:'Costumes',
-      message:'please tell your issue you faced while ordering costumes',
-      trigger:'waiting2'
-    },
-    {
-       id:'waiting2',
-       user:true,
-       trigger:'sol'
-    },
-    {
-      id:'Mobiles',
-      message:'Please tell the issue faced while ordering mobiles',
-      trigger:'waiting3'
-    },
-    {
-      id:'waiting3',
-      user:true,
-      trigger:'sol'
-    },
-    {
-      id:'Laptops',
-      message:'Please tell the issue faced while ordering Laptops',
-      trigger:'waiting4'
-
-    },{
-      id:'waiting4',
-      user:true,
-      trigger:'sol'
-    },
-    
-    */
   ];
 
   const handleEnd = ({ steps, values }) => {

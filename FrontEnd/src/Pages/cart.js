@@ -210,7 +210,7 @@ export default function Cart() {
 
     return (
         <div className="cart">
-            <ChatBot/>
+            {/* <ChatBot/> */}
             {loading ? <Loading text="Processing Your Order Request" />
                 : <div>
                     <Header /><div className="card-container" >
