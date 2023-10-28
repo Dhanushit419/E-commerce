@@ -11,25 +11,24 @@ const PGPORT = '5432'
 const ENDPOINT_ID = 'E-commerce Website'
 
 var conn = new pg.Client({
-    user: PGUSER,
-    password: PGPASSWORD,
-    database: PGDATABASE,
-    port: PGPORT,
-    host: PGHOST,
-    ssl: true,
-    connectionTimeoutMillis: 1000000, 
-    idleTimeoutMillis: 1000000 
+  user: PGUSER,
+  password: PGPASSWORD,
+  database: PGDATABASE,
+  port: PGPORT,
+  host: PGHOST,
+  ssl: true,
+  connectionTimeoutMillis: 1000000,
+  idleTimeoutMillis: 1000000
 });
 
 //checking connectivity
 const connectDB = async () => {
-    try {
-      console.log("Connecting....")
-      await conn.connect();
-      console.log("Connected to db");
-    } catch (err) {
-      console.error("Error connecting to the database: " + err.message);
-    }
-  };
-
-  export { conn, connectDB };
+  try {
+    console.log("Connecting....")
+    await conn.connect();
+    console.log("Connected to db");
+  } catch (err) {
+    console.error("Error connecting to the database: " + err.message);
+  }
+};
+export { conn, connectDB };

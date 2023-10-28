@@ -32,6 +32,8 @@ export default function Dashboard() {
     const myCookie = new Cookies
     const ProductList = JSON.parse(localStorage.getItem('productsList'))
     const [list, setList] = useState(ProductList)
+    const namesArray = list.map(element => element.name);
+    console.log(namesArray)
     const [display1, setdisplay1] = useState(false);
     const [stockValue, setStockValue] = useState(0);
     const onchange = () => {

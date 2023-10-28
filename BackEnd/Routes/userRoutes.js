@@ -4,13 +4,40 @@ import nodemailer from 'nodemailer';
 const router=express.Router()
 
 
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'dhanushit419@gmail.com',
+        pass: 'chec mqfk cmmm sewh',
+    },
+});
+
+
 //sign up form - new user registration
+
+const verifyEmail = async (email,username) => {
+    const mailOptions = {
+        from: 'dhanushit419@gmail.com',
+        to: email,
+        subject: 'User Registered Sucessfully in Trenify',
+        text: 'Dear , '+username+' You are Sucessfully Registered in Trendify :)\nWelcome to Trendify',
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log("sent");
+        return true
+    } catch (err) {
+
+        console.log("Err "+err.message)
+        return false
+    }
+};
 
 router.post("/register", async (req, res) => {
     const data = req.query
     console.log(data)
-    verifyEmail(data.email);
-    const response = { newUser: true, uniqueUsername: false }
+    const response = { newUser: true, uniqueUsername: false,mail:false }
     // console.log(response)
 
     try {
@@ -36,7 +63,10 @@ router.post("/register", async (req, res) => {
     }
 
 
-    if (response.newUser && response.uniqueUsername) {
+   //if(verifyEmail(data.email,data.username))response.mail=true;
+
+    if ( response.newUser && response.uniqueUsername) {
+        
         try {
             await conn.query("INSERT INTO customer(username,email,password,mobile_num,address,city) VALUES($1,$2,$3,$4,$5,$6);", [data.username, data.email, data.pwd, data.mobile, data.address, data.city])
         }
@@ -106,31 +136,21 @@ router.get("/profile", async (req, res) => {
     res.json(response)
 })
 
-const verifyEmail = async (email) => {
-    const transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'dhanushit419@gmail.com',
-            pass: 'chec mqfk cmmm sewh',
-        },
-    });
+// const verifyEmail = async (email) => {
+//     const mailOptions = {
+//         from: 'dhanushit419@gmail.com',
+//         to: 'sdhanushk67@gmail.com',
+//         subject: 'Email Verification Test',
+//         text: 'This is a test email for verification.',
+//     };
 
-    const mailOptions = {
-        from: 'dhanushit419@gmail.com',
-        to: 'sdhanushk67@gmail.com',
-        subject: 'Email Verification Test',
-        text: 'This is a test email for verification.',
-    };
-
-    try {
-        await transporter.sendMail(mailOptions);
-        // If no error occurred, the email is valid and deliverable
-        console.log("sent");
-    } catch (err) {
-        // An error occurred during verification or the email is not deliverable
-        console.log("Err "+err.message)
-    }
-};
+//     try {
+//         await transporter.sendMail(mailOptions);
+//         console.log("sent");
+//     } catch (err) {
+//         console.log("Err "+err.message)
+//     }
+// };
 
 
 export default router;

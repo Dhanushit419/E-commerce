@@ -34,9 +34,11 @@ const [items, setItems] = useState([]);
               element.value = element.name;
             });
             setItems([...res.data.items])
-            console.log("gooott");
+            console.log("...");
+            const namesArray = res.data.items.map(element => element.name);
+
             console.log(res.data.items)
-            console.log(items)
+            console.log(namesArray)
             
         })
 },[])

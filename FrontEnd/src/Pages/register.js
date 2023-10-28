@@ -92,7 +92,14 @@ export default function Register() {
         params: userDetails
       })
         .then((res) => {
-          if (!res.data.newUser) {
+          if(!res.data.mail){
+            Swal.fire({
+              icon: 'error',
+              title: 'Invalid Email Address!',
+              text: 'Please provide a valid email address.'
+            });
+          }
+          else if (!res.data.newUser) {
             Swal.fire({
               icon: 'warning',
               title: 'User Already Registered !',
