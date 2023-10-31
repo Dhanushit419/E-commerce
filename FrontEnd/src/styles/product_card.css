@@ -15,6 +15,17 @@ transition: transform 0.3s; */
     line-height: 1.5;
   }
   
+  .s-btn {
+    background-color:#FFF2D8;
+  }
+  .s-btn:hover {
+    background-color: #113946;
+    font-weight: bolder;
+    color: whitesmoke;
+    cursor: pointer;
+  }
+
+
   .card-data {
     height: auto;
     width: 200px;

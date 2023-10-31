@@ -10,6 +10,7 @@ import { Cookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import * as mobilenet from "@tensorflow-models/mobilenet";
+import OpenAI from 'openai'
 
 function Header() {
   const myCookie = new Cookies();
@@ -29,7 +30,32 @@ function Header() {
   const [load, setLoad] = useState(false)
   const [modelLoading,setModelLoading]=useState(true)
 
+
+  const API_KEY="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";
+
+  const openai = new OpenAI({
+      apiKey: API_KEY, // defaults to process.env["OPENAI_API_KEY"]
+      dangerouslyAllowBrowser: true
+  });
+
+
+ const[gptArray,gptArrayFunction]=useState([])
+
+ 
+async function check(iname) {
+  const response =  await openai.chat.completions.create({
+          messages: [{ role: 'system', content: "Here is the list of products : ['Ethnic Wear Collection', 'Fridge ', 'Nikon camera', 'Mixer Grinder (3 jars)', 'Poco -Xiamo Mobile Phone', 'IQOO Z7 5G (Pacific Night, 128 GB)  (6 GB RAM)', 'oneplus11 5g mobile', 'T-Shirts (Buy1Get2)', 'Stunning Sunglasses', 'Camaro remote control car', 'pearl childrens raincoat', 'Cooker', 'Travel Bags', 'Raincoat', 'Sofa 3 Seater', 'Dining Tables', 'Memorable Greeting Cards', 'womens ethnic wear', 'womens ethnic wear', 'vip travel bag', 'assembly trolley travel bag', 'yellow raincoat', 'love greeting card', 'us polo blue mens tshirt', 'adidas mens tshirt', 'puma mens tshirt', 'lg fridge', 'samsung fridge', 'canon dslr camera', 'godrej sofa set', 'haley sofaset', 'rectangular modern sofaset', 'Water Bottles', 'Coffee cup', 'Hero helmet', 'Werner ladder', 'Air conditioner', 'Artifical jewellery', 'Night suit', 'EAFU power bank', 'Selfie stick', 'Pendrive', 'Wired mouse', 'Printer', 'Logi speakers', 'Vacuum cleaner', 'Samsung sound bar', 'Sony home theater', 'One sports shoe', 'Round Nylon umbrella', 'Whirlpool washing machine front load', 'yellow sweater', 'inverno sweater', 'mia sweater for women', 'samsung s23 ultra mobile', 'ipad', 'Digital Watch', 'macbook', 'hp pavilion laptop', 'red mens fashionable shirt', 'mens blue shirt', 'steam cooker', 'hawkins induction cooker', 'electric pressure cooker', 'preethi zodiac mixer', 'breville handmixer', 'sony dslr camera', 'Hairband', 'asus rog laptop', 'Sweater', 'Philips trimmer', 'Powerful and Portable Laptop!', 'Samsung smart tv', 'cool sneakers', ' Boat smart watch', 'birthday greeting card', 'L shape sofa set', ' greenlands grey travel bag', 'white basic hoodie', 'iphone 14 pro max', 'Denim Shirt', 'Hoodies'].from this suggest 3  items which are most related to "+ iname +". give items strictly (no other text needed) in the format (item1/item2/item3)" }],
+          model: 'gpt-3.5-turbo',
+  })
+ const suggestion= (response.choices[0].message.content);
+ const suggestion_array=suggestion.split('/');
+ gptArrayFunction(suggestion_array);
+ console.log(suggestion_array);
+
+ }
+
   const SearchedList = () => {
+    var iname = document.querySelector('#search').value;
     console.log("Search Request sent to Backend for : "+document.querySelector('#search').value)
     setLoad(true)
     axios({
@@ -48,6 +74,7 @@ function Header() {
       .catch((err) => {
         console.log(err)
       })
+      check(iname);
   }
 
 
@@ -174,6 +201,19 @@ function Header() {
               )
             }
           </div>
+
+          <h2 style={{textAlign:"center"}}>Related Products</h2> 
+          <div style={{display:"flex", flexDirection:"row", justifyContent:"center"}}>
+            {gptArray.map(i=>{
+              return <div onClick={()=>{
+                document.querySelector("#search").value = i;
+                window.scrollTo(0,0);
+                SearchedList();
+              }} className="s-btn" style={{margin:'20px',padding:"10px 20px",borderRadius:"99em"}}> {i}
+              </div>
+            })}
+          </div>
+
           <hr styles={"height:2px;border-width:0;color:gray;background-color:gray"} />
         </div>
         : <>{load && <div>

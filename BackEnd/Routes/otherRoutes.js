@@ -42,6 +42,15 @@ router.get("/getreviews", async (req, res) => {
     res.json({ list: result })
 })
 
+router.post("/complaint",async(req,res)=>{
+    console.log(req.query)
+    try{
+        const docs=await query("insert into complaints(username,fb) values($1,$2)",[req.query.name,req.query.com]);
 
+    }
+    catch(err){
+        console.log("eror in registering complaint /:" + err.message)
+    }
+})
 
 export default router;
