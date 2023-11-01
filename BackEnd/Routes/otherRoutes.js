@@ -45,11 +45,31 @@ router.get("/getreviews", async (req, res) => {
 router.post("/complaint",async(req,res)=>{
     console.log(req.query)
     try{
-        const docs=await query("insert into complaints(username,fb) values($1,$2)",[req.query.name,req.query.com]);
-
+        
+        const docs=await conn.query("insert into complaints(username,fb) values($1,$2)",[req.query.name,req.query.com]);
     }
     catch(err){
         console.log("eror in registering complaint /:" + err.message)
+    }
+})
+
+
+router.post("/complaintview",async(req,res)=>{
+   // console.log(req.query)
+    var result=[];
+    try{
+        
+        const docs=await conn.query("select * from complaints");
+        docs.rows.forEach(row => {
+            result.push({
+                username: row.username,
+                fb: row.fb
+            })
+        })
+        res.json({ list: result })
+    }
+    catch(err){
+        console.log("eror in getting complaint /:" + err.message)
     }
 })
 

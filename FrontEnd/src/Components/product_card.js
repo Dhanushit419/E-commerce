@@ -26,6 +26,7 @@ export default function Card(props) {
     const [fav, setFav] = useState(false);
 
     const userDetails = { id: props.id, username }
+    
     useEffect(() => {
         //checking the local storage
         const cart = JSON.parse(localStorage.getItem('cart'));

@@ -100,7 +100,6 @@ export default function Product(props) {
             })
     }
 
-
     function handleChangeFav() {
         if (!fav) {
             setFav(true)

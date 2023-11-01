@@ -34,6 +34,7 @@ const verifyEmail = async (email,username) => {
     }
 };
 
+
 router.post("/register", async (req, res) => {
     const data = req.query
     console.log(data)

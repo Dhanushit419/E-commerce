@@ -21,7 +21,7 @@ import Dashboard from './Pages/admin/dashboard';
 import AddProducts from './Pages/admin/addProduct';
 import ProductList from './Pages/admin/productList';
 import UserList from './Pages/admin/userList';
-
+import Complaints from './Pages/admin/complaints.js'
 
 export default function myapp() {
   return (
@@ -34,7 +34,7 @@ export default function myapp() {
           <Route element={<AddProducts />} path='/addproduct' />
           <Route element={<ProductList />} path='/productlist' />
           <Route element={<UserList />} path='/userlist' />
-
+          <Route element={<Complaints/>} path='/complaint'/>
           {/* user side paths */}
           <Route element={<About />} path='/about' />
           <Route element={<Home />} path='/home' />

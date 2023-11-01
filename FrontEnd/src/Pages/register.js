@@ -17,12 +17,14 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon } from "@mui/icons-material";
 
 export default function Register() {
+
   function isValidEmail(email) {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(email);
   }
-  
+
   function validateForm() {
+
     if (userDetails.username === "" || userDetails.email === "" || userDetails.mobile === "" || userDetails.pwd === "" || userDetails.Confirmpassword === "" || userDetails.address === "" || userDetails.city === "") {
       Swal.fire({
         icon: 'error',
@@ -92,7 +94,7 @@ export default function Register() {
         params: userDetails
       })
         .then((res) => {
-          if(!res.data.mail){
+          if (!res.data.mail) {
             Swal.fire({
               icon: 'error',
               title: 'Invalid Email Address!',

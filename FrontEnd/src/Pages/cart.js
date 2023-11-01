@@ -69,6 +69,7 @@ export default function Cart() {
             calculateTotal()
         }
     }
+    
     const reduceProductStock = () => {
         const updatedProductsList = JSON.parse(localStorage.getItem('productsList'));
         // Iterate through the cart items

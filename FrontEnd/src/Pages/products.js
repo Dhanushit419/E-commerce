@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Components/header";
 import Product_card from "../Components/product_card";
-import axios from 'axios';
-import Apiurl from '../Components/Apiurl.js'
+
 import ChatBot from '../Components/ChatBot/chatBot';
 
 

@@ -43,8 +43,8 @@ export default function Start() {
         if (productsList.length > 0 && reviews.length > 0) {
             localStorage.setItem('productsList', JSON.stringify(productsList))
             localStorage.setItem('reviews', JSON.stringify(reviews))
-            console.log(productsList.length+" Products fetched")
-            console.log(reviews.length+" Reviews fetched")
+            console.log(productsList.length + " Products fetched")
+            console.log(reviews.length + " Reviews fetched")
             setLoading(false);
         }
     }, [productsList, reviews]);

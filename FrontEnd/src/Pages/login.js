@@ -6,13 +6,13 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PasswordIcon from '@mui/icons-material/Password';
 import axios from 'axios';
 import Apiurl from '../Components/Apiurl.js'
 import LoginIcon from '@mui/icons-material/Login';
 import Swal from 'sweetalert2'
 import LockIcon from '@mui/icons-material/Lock';
 import Loading from "../Components/loading";
+
 
 export default function Login() {
   useEffect(() => {
@@ -47,21 +47,21 @@ export default function Login() {
       method: "POST",
       params: userDetails
     })
-      .then(async(res) => {
+      .then(async (res) => {
         if (res.data.correct) {
           setLoading(true)
-          document.title="Logging in - Trendify"
-          
+          document.title = "Logging in - Trendify"
+
           myCookie.set("username", res.data.username);
           const username = myCookie.get("username");
 
-         await axios({
+          await axios({
             url: Apiurl + "/cart/cart",
             method: "GET",
             params: { username }
           })
             .then((res) => {
-              if(res.data.status){
+              if (res.data.status) {
                 console.log("cart fetched")
                 setCart(res.data.list)
                 setFetch(true)
@@ -72,16 +72,18 @@ export default function Login() {
               console.log(err);
             })
 
-          console.log("Cart items : "+cart.length)
-            {!loading&&Swal.fire({
+          console.log("Cart items : " + cart.length)
+          {
+            !loading && Swal.fire({
               icon: 'success',
               title: 'Login sucesful'
             }).then((res) => {
               if (res.isConfirmed) {
                 navigate("/home");
               }
-            })}
-          
+            })
+          }
+
         } else if (res.data.newMail) {
 
           Swal.fire({
@@ -129,7 +131,7 @@ export default function Login() {
 
   return (
     <div className="login">
-      {loading?<Loading text="Logging in..."/>:
+      {loading ? <Loading text="Logging in..." /> :
         <div>
           <div>
             <header className="header-home">

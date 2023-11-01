@@ -7,9 +7,9 @@ import Card from '../Components/home_card';
 import ChatBot from '../Components/ChatBot/chatBot';
 import { Cookies } from "react-cookie";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import Apiurl from '../Components/Apiurl.js'
+
 import Toplist from '../Components/topproducts';
+
 
 
 export default function Home() {
